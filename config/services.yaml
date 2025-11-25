@@ -1,0 +1,12 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    VM\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+
