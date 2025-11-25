@@ -1,0 +1,36 @@
+openapi: 3.1.1
+info:
+  title: Vending Machine sandbox
+  version: 1.0.0
+  description: Vending Machine Open documentation & sandbox
+servers:
+  - url: http://localhost:8800
+    description: Development environment
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+    - name: Health
+paths:
+    ######################################
+    ####            HEALTH            ####
+    ######################################
+    /health:
+        get:
+            tags:
+                - Health
+            summary: Health check
+            security: []
+            responses:
+                '200':
+                    description: Service available
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: "Service Available"
