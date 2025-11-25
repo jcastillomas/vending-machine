@@ -59,3 +59,4 @@
 ###< phpunit/phpunit ###
 
 coverage/
+database/*

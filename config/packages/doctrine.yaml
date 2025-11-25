@@ -1,0 +1,27 @@
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                url: 'mysql://%env(MYSQL_USERNAME)%:%env(MYSQL_PASSWORD)%@%env(MYSQL_HOST)%:%env(MYSQL_PORT)%/%env(MYSQL_DATABASE_NAME)%'
+                server_version: '%env(MYSQL_SERVER_VERSION)%'
+            migrations:
+                url: 'mysql://%env(MYSQL_MIGRATIONS_USERNAME)%:%env(MYSQL_MIGRATIONS_PASSWORD)%@%env(MYSQL_HOST)%:%env(MYSQL_PORT)%/%env(MYSQL_DATABASE_NAME)%'
+                server_version: '%env(MYSQL_SERVER_VERSION)%'
+
+        types:
+            ######################  DEVICES  ######################
+            vending_machine_id: VM\Context\Devices\Infrastructure\Write\Type\VendingMachineIdType
+
+    orm:
+        entity_managers:
+            vending_machine:
+                connection: default
+                validate_xml_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    User:
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Context/Devices/Infrastructure/Write/Mapping'
+                        prefix: 'VM\Context\Devices\Domain\Write'
+                        is_bundle: false

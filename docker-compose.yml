@@ -21,3 +21,17 @@ services:
       - /var/www/vending_machine/var/
       - ./resources/docker/local/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
 
+  mysql:
+      container_name: vending_machine_mysql
+      image: mysql:8.0.32
+      extends:
+          file: resources/docker/local/mysql/volume_mappings.yml
+          service: vending_machine_mysql
+      environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_DATABASE: vending_machine
+          MYSQL_USER: vending_machine_user
+          MYSQL_PASSWORD: vending_machine_password
+      ports:
+          - '13336:3306'

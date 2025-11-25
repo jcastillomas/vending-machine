@@ -1,1 +1,1 @@
-{"version":2,"defects":{"VM\\Tests\\Unit\\Context\\Devices\\Domain\\Write\\Aggregate\\VendingMachineTest::test_it_creates_a_vending_machine":8},"times":{"VM\\Tests\\Unit\\Context\\Devices\\Domain\\Write\\Aggregate\\VendingMachineTest::test_it_creates_a_vending_machine":0.021}}
+{"version":2,"defects":{"VM\\Tests\\Unit\\Context\\Devices\\Domain\\Write\\Aggregate\\VendingMachineTest::test_it_creates_a_vending_machine":8},"times":{"VM\\Tests\\Unit\\Context\\Devices\\Domain\\Write\\Aggregate\\VendingMachineTest::test_it_creates_a_vending_machine":0.029}}
