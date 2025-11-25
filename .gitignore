@@ -52,3 +52,10 @@
 /.web-server-pid
 .idea
 .env.dev
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+coverage/

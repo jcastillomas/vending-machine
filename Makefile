@@ -50,6 +50,7 @@ help:
 	@echo -e "    $(COLOR_YELLOW)stop          	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Docker compose Stop $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)php          	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Connect to Docker PHP Container $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)cc				$(COLOR_PURPLE)-> $(COLOR_CYAN) Clear the cache $(COLOR_NC)"
+	@echo -e "    $(COLOR_YELLOW)test-unit     	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute PHPUnit tests with coverage mode$(COLOR_NC)"
 	@echo ""
 
 ## install: Creates the environment
@@ -78,3 +79,8 @@ php:
 .PHONY: cc
 cc:
 	@docker compose exec php-fpm /bin/bash -c "php bin/console cache:clear"
+
+## Runs unit tests with coverage mode
+.PHONY: test-unit
+test-unit:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
