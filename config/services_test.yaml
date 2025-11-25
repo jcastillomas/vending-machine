@@ -1,0 +1,5 @@
+services:
+    _defaults:
+        public: true
+
+    test.VM\Context\Devices\Domain\Write\Repository\VendingMachineRepository: '@VM\Context\Devices\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineVendingMachineRepository'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VM\Context\Devices\Infrastructure\Write\Repository;
+namespace VM\Context\Devices\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository;
 
 use VM\Context\Devices\Domain\Write\Aggregate\ValueObject\VendingMachineId;
 use VM\Context\Devices\Domain\Write\Aggregate\VendingMachine;

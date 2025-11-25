@@ -51,6 +51,7 @@ help:
 	@echo -e "    $(COLOR_YELLOW)php          	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Connect to Docker PHP Container $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)cc				$(COLOR_PURPLE)-> $(COLOR_CYAN) Clear the cache $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-unit     	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute PHPUnit tests with coverage mode$(COLOR_NC)"
+	@echo -e "    $(COLOR_YELLOW)test-integration      	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute integration tests $(COLOR_NC)"
 	@echo ""
 
 ## install: Creates the environment
@@ -84,3 +85,8 @@ cc:
 .PHONY: test-unit
 test-unit:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
+
+## Runs unit integration tests
+.PHONY: test-integration
+test-integration:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"

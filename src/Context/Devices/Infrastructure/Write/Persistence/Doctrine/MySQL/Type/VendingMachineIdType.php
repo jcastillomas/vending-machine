@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VM\Context\Devices\Infrastructure\Write\Type;
+namespace VM\Context\Devices\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;

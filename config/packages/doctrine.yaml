@@ -11,17 +11,17 @@ doctrine:
 
         types:
             ######################  DEVICES  ######################
-            vending_machine_id: VM\Context\Devices\Infrastructure\Write\Type\VendingMachineIdType
+            vending_machine_id: VM\Context\Devices\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\VendingMachineIdType
 
     orm:
         entity_managers:
-            vending_machine:
+            devices:
                 connection: default
                 validate_xml_mapping: true
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 mappings:
-                    User:
+                    Devices:
                         type: xml
-                        dir: '%kernel.project_dir%/src/Context/Devices/Infrastructure/Write/Mapping'
+                        dir: '%kernel.project_dir%/src/Context/Devices/Infrastructure/Write/Persistence/Doctrine/MySQL/Mapping'
                         prefix: 'VM\Context\Devices\Domain\Write'
                         is_bundle: false
