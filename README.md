@@ -60,6 +60,8 @@ But it is a design consideration, we can create a new context for each of them o
 
 ## Tech challenge
 
+<details>
+<summary>1. Single request Interacts with different services</summary>
 We have 2 flows that breaks the conditions above of interacting just with a single context, these are, the GET-ITEM
 flow that it needs to interact at the same time with the payment and the product context,
 the same happens with the flow of service tool that manage the amount values of the VM.
@@ -73,3 +75,15 @@ this thing will simulate the orchestration between our contexts, this is not a w
 But doing this trick that we said before, we can enable a route that can handle a request and interact with different context all with keeping the transactionality.
 A well-design solution can be to move this logic inside a BFF, allowing the client to request to the BFF this kind of requests, and the BFF will split the request in more request for each service
 that needs to interact.
+</details>
+
+
+<details>
+<summary>2. The Goal just works for an existing machine</summary>
+In our system we designed an escalating solution to be able to have more than 1 vending machine.
+
+The goal is the functionality of the vending-machine not the escalation solution, so we are going prepare the system for the future
+just in case that we need more than 1 vending machine, but right now, we only need for the goal one simple vending machine.
+
+In this case we will create a vending machine on project starts if not exists, and then we will use this vending machine for all requests.
+</details>

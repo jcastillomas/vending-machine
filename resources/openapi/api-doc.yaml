@@ -32,5 +32,4 @@ paths:
                         application/json:
                             schema:
                                 type: object
-                                example:
-                                    status: "Service Available"
+
