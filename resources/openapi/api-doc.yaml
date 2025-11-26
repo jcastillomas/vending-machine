@@ -1,20 +1,81 @@
 openapi: 3.1.1
 info:
-  title: Vending Machine sandbox
-  version: 1.0.0
-  description: Vending Machine Open documentation & sandbox
+    title: Vending Machine sandbox
+    version: 1.0.0
+    description: Vending Machine Open documentation & sandbox
 servers:
-  - url: http://localhost:8800
-    description: Development environment
+    - url: http://localhost:8800
+      description: Development environment
 components:
-  securitySchemes:
-    bearer:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    schemas:
+        VendingMachine:
+            type: object
+            properties:
+                VendingMachineId:
+                    $ref: '#/components/schemas/Id'
+        Product:
+            type: object
+            properties:
+                ProductId:
+                    $ref: '#/components/schemas/Id'
+                ProductName:
+                    $ref: '#/components/schemas/ProductName'
+        Stock:
+            type: object
+            properties:
+                VendingMachineId:
+                    $ref: '#/components/schemas/Id'
+                ProductId:
+                    $ref: '#/components/schemas/Id'
+                Stock:
+                    $ref: '#/components/schemas/Number'
 
+        Currency:
+            type: object
+            properties:
+                CurrencyId:
+                    $ref: '#/components/schemas/Id'
+                Value:
+                    $ref: '#/components/schemas/CurrencyValue'
+                Currency:
+                    $ref: '#/components/schemas/CurrencyKindOfCurrency'
+        Cash:
+            type: object
+            properties:
+                VendingMachineId:
+                    $ref: '#/components/schemas/Id'
+                CurrencyId:
+                    $ref: '#/components/schemas/Id'
+                Stock:
+                    $ref: '#/components/schemas/Number'
+        Fund:
+            type: object
+            properties:
+                VendingMachineId:
+                    $ref: '#/components/schemas/Id'
+                CurrencyId:
+                    $ref: '#/components/schemas/Id'
+                Stock:
+                    $ref: '#/components/schemas/Number'
+        Id:
+            type: string
+            example: 8ecf229b-fdc8-4794-9f17-a690ec680081
+        Number:
+            type: integer
+            example: 0
+        ProductName:
+            type: string
+            example: 'Water'
+        CurrencyValue:
+            type: string
+            example: '0.10'
+        CurrencyKindOfCurrency:
+            type: string
+            example: EUR
 tags:
     - name: Health
+    - name: App
+    - name: Payment
 paths:
     ######################################
     ####            HEALTH            ####
@@ -24,7 +85,6 @@ paths:
             tags:
                 - Health
             summary: Health check
-            security: []
             responses:
                 '200':
                     description: Service available
@@ -32,4 +92,109 @@ paths:
                         application/json:
                             schema:
                                 type: object
-
+    ######################################
+    ####              APP             ####
+    ######################################
+    /buy-item:
+        get:
+            tags:
+                - App
+            summary: Buy a Product.
+            parameters:
+                -   name: product_name
+                    in: query
+                    required: true
+                    description: Product name.
+                    schema:
+                        $ref: '#/components/schemas/ProductName'
+            responses:
+                '200':
+                    description: Transaction complete.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                            example: ['WATER', 0.25, 0.10]
+                '404':
+                    description: Item not found.
+                '409':
+                    description: Unable to buy item.
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                            example: 'Insufficient stock of selected item'
+    /service:
+        patch:
+            tags:
+                - App
+            summary: Update Stock and Cash of the VM.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                stock:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            product_name:
+                                                $ref: '#/components/schemas/ProductName'
+                                            stock:
+                                                $ref: '#/components/schemas/Number'
+                                cash:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            currency_value:
+                                                $ref: '#/components/schemas/CurrencyValue'
+                                            amount:
+                                                $ref: '#/components/schemas/Number'
+            responses:
+                '202':
+                    description: Vending machine stock and cash updated.
+                '409':
+                    description: Unable to do any change.
+    ######################################
+    ####            PAYMENT           ####
+    ######################################
+    /insert-coin:
+        post:
+            tags:
+                - Payment
+            summary: Insert a Coin.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                        example:
+                            '0.20'
+            responses:
+                '202':
+                    description: Inserted coin.
+                '409':
+                    description: Unable to accept the coin.
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                            example: 'Coin value is not valid'
+    /return-coins:
+        get:
+            tags:
+                - Payment
+            summary: Return all the Coins.
+            responses:
+                '200':
+                    description: Return all of the founds of the transaction.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                            example:
+                                - '0.10'
+                                - '0.10'

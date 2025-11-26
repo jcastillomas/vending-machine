@@ -4,11 +4,11 @@ Example of a vending machine.
 
 ## Getting started
 
-See all the documentation about to start with this project in [GettingStarted](docs/GettingStarted.md).
+See all the documentation about to start with this project in [GettingStarted](resources/docs/GettingStarted.md).
 
 ## Goal
 
-See all the documentation of the [Goal](docs/Goal.md) of this project.
+See all the documentation of the [Goal](resources/docs/Goal.md) of this project.
 
 ## Design considerations
 
@@ -16,7 +16,7 @@ In order to accomplish all the goal we need to take some considerations,
 these considerations are related about the implementation that we need to do,
 and how it will influence in the architecture of the project.
 
-Before read the next documentation, please take a look on the [Goal](docs/Goal.md) to understand the point of this project.
+Before read the next documentation, please take a look on the [Goal](resources/docs/Goal.md) to understand the point of this project.
 
 After knowing the point, let's start to talk about that this project is an approach to solve the goal,
 there's no unique solution to solve it, and all can be valid, in this case we're going to start identifying
@@ -40,6 +40,7 @@ With the before flows in the mind, we can start to identify the Models that we w
 - Currency: Value of a coin and the currency of it.
 - Stock: list of items with the amount of them in the VM.
 - Cash: list of currencies and the amount of them in the VM.
+- Funds: list of currencies amd the mount of them in a current transaction of the VM.
 
 With the figures in mind, we can start to split in 3 main contexts:
 
