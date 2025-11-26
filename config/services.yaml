@@ -4,9 +4,26 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            $commandBus: '@shared.application.command_bus'
 
     VM\:
         resource: '../src/'
         exclude:
             - '../src/Kernel.php'
 
+    _instanceof:
+        VM\Shared\Domain\Message\Message:
+            tags: [ 'message' ]
+
+        VM\Shared\Application\Bus\Command\CommandHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: messenger.bus.commands }
+
+    message.message_factory:
+        alias: VM\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory
+
+    shared.application.command_bus:
+        class: VM\Shared\Infrastructure\Bus\Command\MessengerCommandBus
+        arguments:
+            - '@messenger.bus.commands'
