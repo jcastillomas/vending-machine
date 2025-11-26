@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.5",
+        "fakerphp/faker": "^1.24",
         "ramsey/uuid": "^4.9",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
