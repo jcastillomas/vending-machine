@@ -88,3 +88,7 @@ just in case that we need more than 1 vending machine, but right now, we only ne
 
 In this case we will create a vending machine on project starts if not exists, and then we will use this vending machine for all requests.
 </details>
+
+## API documentation with all models and end-points
+
+You can find an openapi doc [here](../openapi/api-doc.yaml).
