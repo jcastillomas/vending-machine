@@ -35,6 +35,8 @@ final class DoctrineVendingMachineRepositoryTest extends AggregateRepositoryTest
     {
         $actualVendingMachine = $this->repository->find($expectedVendingMachine->id());
         $this->assertEquals($expectedVendingMachine->id(), $actualVendingMachine->id());
+        $this->assertEquals($expectedVendingMachine->createdAt()->getTimestamp(), $actualVendingMachine->createdAt()->getTimestamp());
+        $this->assertEquals($expectedVendingMachine->updatedAt()?->getTimestamp(), $actualVendingMachine->updatedAt()?->getTimestamp());
     }
 
     protected function repository(): AggregateRepository
