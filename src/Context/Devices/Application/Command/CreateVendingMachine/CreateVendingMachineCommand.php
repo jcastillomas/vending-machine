@@ -24,11 +24,6 @@ class CreateVendingMachineCommand extends Command
         return VendingMachineId::fromString($this->get(self::ID));
     }
 
-    protected function version(): string
-    {
-        return '1.0';
-    }
-
     public static function messageName(): string
     {
         return 'command.devices.create_vending_machine';

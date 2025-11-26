@@ -9,6 +9,8 @@ use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
 
 final class CurrencyValueStub
 {
+    const MIN_VALUE = 0.001;
+
     public static function create(float $value): CurrencyValue
     {
         return CurrencyValue::fromFloat($value);
@@ -18,6 +20,6 @@ final class CurrencyValueStub
     {
         $faker = Factory::create();
 
-        return CurrencyValue::fromFloat($faker->randomFloat(null, 0.001));
+        return CurrencyValue::fromFloat($faker->randomFloat(null, self::MIN_VALUE));
     }
 }

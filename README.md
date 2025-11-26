@@ -45,16 +45,18 @@ With the before flows in the mind, we can start to identify the Models that we w
 With the figures in mind, we can start to split in 3 main contexts:
 
 - Devices
-   - We will include an aggregate with VendingMachines.
+   - We will include an aggregate with VendingMachine.
 
 - Payment:
   - We will include an aggregate with Currencies (Value and Currency).
-  - We will include an aggregate with Cash (VM, Currency and amount).
-  - We will include an aggregate with Fund (VM, Currency and amount).
+  - We will include an aggregate with VendingMachine
+    - We will include an Entity with Cash (VM, Currency and amount).
+    - We will include an Entity with Fund (VM, Currency and amount).
 
 - Product:
   - We will include an aggregate with Products (ProductName and Value).
-  - We will include an aggregate with Stock (VM, Product and amount).
+  - We will include an aggregate with VendingMachine
+    - We will include an aggregate with Stock (VM, Product and amount).
 
 We consider store the stock inside Product and the cash inside Payment context in order to reduce the amount of times that the context will interact with them.
 But it is a design consideration, we can create a new context for each of them or even put inside the Device context.

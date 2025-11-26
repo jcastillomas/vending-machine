@@ -11,51 +11,70 @@ components:
         VendingMachine:
             type: object
             properties:
-                VendingMachineId:
+                vendingMachineId:
                     $ref: '#/components/schemas/Id'
         Product:
             type: object
             properties:
-                ProductId:
+                productId:
                     $ref: '#/components/schemas/Id'
-                ProductName:
+                productName:
                     $ref: '#/components/schemas/ProductName'
+                value:
+                    $ref: '#/components/schemas/Number'
         Stock:
             type: object
             properties:
-                VendingMachineId:
+                vendingMachineId:
                     $ref: '#/components/schemas/Id'
-                ProductId:
+                stockItems:
+                    $ref: '#/components/schemas/StockItems'
+        StockItems:
+            type: array
+            items:
+                type: object
+                $ref: '#/components/schemas/StockItem'
+        StockItem:
+            type: object
+            properties:
+                productId:
                     $ref: '#/components/schemas/Id'
-                Stock:
+                amount:
                     $ref: '#/components/schemas/Number'
-
         Currency:
             type: object
             properties:
-                CurrencyId:
+                currencyId:
                     $ref: '#/components/schemas/Id'
-                Value:
+                value:
                     $ref: '#/components/schemas/CurrencyValue'
-                Currency:
+                kind:
                     $ref: '#/components/schemas/CurrencyKindOfCurrency'
         Cash:
             type: object
             properties:
-                VendingMachineId:
+                vendingMachineId:
                     $ref: '#/components/schemas/Id'
-                CurrencyId:
-                    $ref: '#/components/schemas/Id'
-                Stock:
-                    $ref: '#/components/schemas/Number'
+                cashItems:
+                    $ref: '#/components/schemas/CashItems'
         Fund:
             type: object
             properties:
-                VendingMachineId:
+                vendingMachineId:
                     $ref: '#/components/schemas/Id'
-                CurrencyId:
+                cashItems:
+                    $ref: '#/components/schemas/CashItems'
+        CashItems:
+            type: array
+            items:
+                type: object
+                $ref: '#/components/schemas/CashItem'
+        CashItem:
+            type: object
+            properties:
+                currencyId:
                     $ref: '#/components/schemas/Id'
-                Stock:
+                amount:
                     $ref: '#/components/schemas/Number'
         Id:
             type: string
