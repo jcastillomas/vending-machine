@@ -13,7 +13,7 @@ use VM\Shared\Domain\Write\Aggregate\AggregateRoot;
 class Cash extends AggregateRoot
 {
     private VendingMachineId $vendingMachineId;
-    private CashItems $cashItems;
+    private $cashItems;
     private DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt;
 
@@ -35,7 +35,7 @@ class Cash extends AggregateRoot
         return $this->vendingMachineId;
     }
 
-    public function cashItems(): CashItems
+    public function cashItems()
     {
         return $this->cashItems;
     }

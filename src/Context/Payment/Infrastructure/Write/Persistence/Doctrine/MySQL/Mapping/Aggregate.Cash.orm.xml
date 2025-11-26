@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="VM\Context\Payment\Domain\Write\Aggregate\Cash" table="cash">
+        <id name="id" column="id" type="cash_id" length="64"/>
+        <field name="vendingMachineId" column="vending_machine_id" type="cash_vending_machine_id" length="64"/>
+        <many-to-many field="cashItems" target-entity="VM\Context\Payment\Domain\Write\Entity\CashItem" fetch="EAGER">
+            <join-table name="cash_cash_item">
+                <join-columns>
+                    <join-column name="cash_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="cash_item_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-many>
+        <field name="createdAt" column="created_at" type="datetime_immutable" />
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true" />
+    </entity>
+</doctrine-mapping>

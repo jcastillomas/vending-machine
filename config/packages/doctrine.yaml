@@ -15,6 +15,10 @@ doctrine:
             currency_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CurrencyIdType
             currency_value: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CurrencyValueType
             currency_kind: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CurrencyKindType
+            cash_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CashIdType
+            cash_item_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CashItemIdType
+            cash_amount: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\AmountType
+            cash_vending_machine_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\VendingMachineIdType
 
     orm:
         entity_managers:
