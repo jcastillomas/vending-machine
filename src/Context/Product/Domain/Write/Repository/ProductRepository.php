@@ -7,8 +7,8 @@ namespace VM\Context\Product\Domain\Write\Repository;
 use VM\Context\Product\Domain\Write\Aggregate\ValueObject\ProductId;
 use VM\Context\Product\Domain\Write\Aggregate\Product;
 
-interface RepositoryRepository
+interface ProductRepository
 {
-    public function save(Product $currency): void;
-    public function find(ProductId $currencyId): Product;
+    public function save(Product $product): void;
+    public function find(ProductId $productId): Product;
 }

@@ -14,7 +14,7 @@ use VM\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepo
 
 final class DoctrineFundRepositoryTest extends AggregateRepositoryTestCase
 {
-    public function test_it_saves_and_finds_cash(): void
+    public function test_it_saves_and_finds_fund(): void
     {
         $expectedFund = $this->givenAFundWith();
         $this->whenAFundIsSaved($expectedFund);

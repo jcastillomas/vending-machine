@@ -20,6 +20,9 @@ doctrine:
             cash_amount: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\AmountType
             cash_vending_machine_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\VendingMachineIdType
             fund_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\FundIdType
+            product_id: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductIdType
+            product_name: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductNameType
+            product_value: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductValueType
 
     orm:
         entity_managers:
@@ -37,4 +40,9 @@ doctrine:
                         type: xml
                         dir: '%kernel.project_dir%/src/Context/Payment/Infrastructure/Write/Persistence/Doctrine/MySQL/Mapping'
                         prefix: 'VM\Context\Payment\Domain\Write'
+                        is_bundle: false
+                    Product:
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Context/Product/Infrastructure/Write/Persistence/Doctrine/MySQL/Mapping'
+                        prefix: 'VM\Context\Product\Domain\Write'
                         is_bundle: false
