@@ -19,6 +19,7 @@ doctrine:
             cash_item_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CashItemIdType
             cash_amount: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\AmountType
             cash_vending_machine_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\VendingMachineIdType
+            fund_id: VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\FundIdType
 
     orm:
         entity_managers:

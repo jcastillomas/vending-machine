@@ -30,9 +30,9 @@ final class DoctrineCashRepositoryTest extends AggregateRepositoryTestCase
         );
     }
 
-    private function whenACashIsSaved(Cash $vendingMachine): void
+    private function whenACashIsSaved(Cash $cash): void
     {
-        $this->repository->save($vendingMachine);
+        $this->repository->save($cash);
         $this->em()->flush();
         $this->em()->clear();
     }
@@ -54,6 +54,6 @@ final class DoctrineCashRepositoryTest extends AggregateRepositoryTestCase
 
     protected function purge(): void
     {
-        $this->purgeTables( 'currency');
+        $this->purgeTables( 'cash', 'cash_cash_item', 'cash_item');
     }
 }

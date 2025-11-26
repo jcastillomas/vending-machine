@@ -9,6 +9,6 @@ use VM\Context\Payment\Domain\Write\Aggregate\Cash;
 
 interface CashRepository
 {
-    public function save(Cash $currency): void;
-    public function find(CashId $currencyId): Cash;
+    public function save(Cash $cash): void;
+    public function find(CashId $cashId): Cash;
 }

@@ -11,14 +11,14 @@ use VM\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepo
 
 class DoctrineCashRepository extends AggregateRepository implements CashRepository
 {
-    public function save(Cash $currency): void
+    public function save(Cash $cash): void
     {
-        $this->saveAggregate($currency);
+        $this->saveAggregate($cash);
     }
 
-    public function find(CashId $currencyId): Cash
+    public function find(CashId $cashId): Cash
     {
-        return $this->doFind($currencyId);
+        return $this->doFind($cashId);
     }
 
     protected function entityClassName(): string
