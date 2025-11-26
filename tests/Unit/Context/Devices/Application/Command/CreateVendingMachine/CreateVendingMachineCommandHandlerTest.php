@@ -10,8 +10,8 @@ use VM\Context\Devices\Application\Command\CreateVendingMachine\CreateVendingMac
 use VM\Context\Devices\Application\Command\CreateVendingMachine\CreateVendingMachineCommandHandler;
 use VM\Context\Devices\Domain\Write\Aggregate\VendingMachine;
 use VM\Context\Devices\Domain\Write\Repository\VendingMachineRepository;
-use VM\Tests\Infrastructure\Context\Devices\Domain\Write\Aggregate\Repository\VendingMachineRepositoryMock;
 use VM\Tests\Infrastructure\Context\Devices\Domain\Write\Aggregate\ValueObject\VendingMachineIdStub;
+use VM\Tests\Infrastructure\Context\Devices\Domain\Write\Repository\VendingMachineRepositoryMock;
 
 class CreateVendingMachineCommandHandlerTest extends TestCase
 {

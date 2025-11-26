@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\Repository;
+namespace VM\Tests\Infrastructure\Context\Payment\Domain\Write\Repository;
 
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;

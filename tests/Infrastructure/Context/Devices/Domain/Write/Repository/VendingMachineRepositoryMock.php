@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VM\Tests\Infrastructure\Context\Devices\Domain\Write\Aggregate\Repository;
+namespace VM\Tests\Infrastructure\Context\Devices\Domain\Write\Repository;
 
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;

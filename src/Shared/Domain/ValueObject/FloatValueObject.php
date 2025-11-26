@@ -20,6 +20,7 @@ class FloatValueObject
         return new static(floatval($value));
 
     }
+
     public function equalsTo(FloatValueObject $other): bool
     {
         return $this->value === $other->value()

@@ -10,10 +10,10 @@ use VM\Context\Payment\Application\Command\CreateCurrency\CreateCurrencyCommand;
 use VM\Context\Payment\Application\Command\CreateCurrency\CreateCurrencyCommandHandler;
 use VM\Context\Payment\Domain\Write\Aggregate\Currency;
 use VM\Context\Payment\Domain\Write\Repository\CurrencyRepository;
-use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\Repository\CurrencyRepositoryMock;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyIdStub;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyKindStub;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValueStub;
+use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Repository\CurrencyRepositoryMock;
 
 class CreateCurrencyCommandHandlerTest extends TestCase
 {

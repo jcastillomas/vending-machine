@@ -20,16 +20,16 @@ class CurrencyTest extends TestCase
         $kind = CurrencyKindStub::random();
         $datetime = new DateTimeImmutable('-1 Day');
 
-        $vendingMachine = Currency::create(
+        $currency = Currency::create(
             $id,
             $value,
             $kind
         );
 
-        $this->assertTrue($id->equalsTo($vendingMachine->id()));
-        $this->assertTrue($value->equalsTo($vendingMachine->value()));
-        $this->assertTrue($kind->equalsTo($vendingMachine->kind()));
-        $this->assertGreaterThan($datetime->getTimestamp(), $vendingMachine->createdAt()->getTimestamp());
-        $this->assertEquals($vendingMachine->updatedAt(), null);
+        $this->assertTrue($id->equalsTo($currency->id()));
+        $this->assertTrue($value->equalsTo($currency->value()));
+        $this->assertTrue($kind->equalsTo($currency->kind()));
+        $this->assertGreaterThan($datetime->getTimestamp(), $currency->createdAt()->getTimestamp());
+        $this->assertEquals($currency->updatedAt(), null);
     }
 }
