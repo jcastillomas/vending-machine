@@ -22,7 +22,7 @@ class Fund extends AggregateRoot
         VendingMachineId $vendingMachineId,
         CashItems $cashItems,
     ): self {
-        $cash =  new self($fundId);
+        $cash = new self($fundId);
         $cash->vendingMachineId = $vendingMachineId;
         $cash->cashItems = $cashItems;
         $cash->createdAt = new DateTimeImmutable();

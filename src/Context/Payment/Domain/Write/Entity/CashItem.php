@@ -21,12 +21,12 @@ class CashItem extends Entity
         CurrencyId $currencyId,
         Amount $amount,
     ): self {
-        $cash =  new self($id);
-        $cash->currencyId = $currencyId;
-        $cash->amount = $amount;
-        $cash->createdAt = new \DateTimeImmutable();
-        $cash->updatedAt = null;
-        return $cash;
+        $cashItem = new self($id);
+        $cashItem->currencyId = $currencyId;
+        $cashItem->amount = $amount;
+        $cashItem->createdAt = new \DateTimeImmutable();
+        $cashItem->updatedAt = null;
+        return $cashItem;
     }
 
     public function currencyId(): CurrencyId
