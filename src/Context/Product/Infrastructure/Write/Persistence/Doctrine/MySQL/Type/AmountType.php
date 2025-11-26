@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
+namespace VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
 
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use VM\Context\Payment\Domain\Write\Entity\ValueObject\Amount;
+use VM\Context\Product\Domain\Write\Entity\ValueObject\Amount;
 
 class AmountType extends Type
 {
@@ -41,6 +41,6 @@ class AmountType extends Type
 
     public function getName(): string
     {
-        return 'cash_amount';
+        return 'stock_amount';
     }
 }

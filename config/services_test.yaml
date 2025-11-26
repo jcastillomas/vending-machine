@@ -7,3 +7,4 @@ services:
     test.VM\Context\Payment\Domain\Write\Repository\CashRepository: '@VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineCashRepository'
     test.VM\Context\Payment\Domain\Write\Repository\FundRepository: '@VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineFundRepository'
     test.VM\Context\Product\Domain\Write\Repository\ProductRepository: '@VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineProductRepository'
+    test.VM\Context\Product\Domain\Write\Repository\StockRepository: '@VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineStockRepository'

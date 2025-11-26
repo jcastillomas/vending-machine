@@ -23,6 +23,10 @@ doctrine:
             product_id: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductIdType
             product_name: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductNameType
             product_value: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\ProductValueType
+            stock_id: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\StockIdType
+            stock_item_id: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\StockItemIdType
+            stock_amount: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\AmountType
+            stock_vending_machine_id: VM\Context\Product\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\VendingMachineIdType
 
     orm:
         entity_managers:
