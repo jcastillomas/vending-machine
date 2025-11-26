@@ -14,7 +14,7 @@ use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Entity\CashItemsStub;
 
 class CashTest extends TestCase
 {
-    public function test_it_creates_a_currency(): void
+    public function test_it_creates_a_cash(): void
     {
         $id = CashIdStub::random();
         $vendingMachineId = VendingMachineIdStub::random();
