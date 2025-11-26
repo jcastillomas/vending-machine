@@ -12,8 +12,8 @@ use VM\Shared\Domain\Write\Aggregate\AggregateRoot;
 
 class Currency extends AggregateRoot
 {
-    private CurrencyValue $currencyValue;
-    private CurrencyKind $currencyKind;
+    private CurrencyValue $value;
+    private CurrencyKind $kind;
     private DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt;
 
@@ -23,21 +23,21 @@ class Currency extends AggregateRoot
         CurrencyKind $currencyKind
     ): self {
         $currency =  new self($currencyId);
-        $currency->currencyValue = $currencyValue;
-        $currency->currencyKind = $currencyKind;
+        $currency->value = $currencyValue;
+        $currency->kind = $currencyKind;
         $currency->createdAt = new DateTimeImmutable();
         $currency->updatedAt = null;
         return $currency;
     }
 
-    public function currencyValue(): CurrencyValue
+    public function value(): CurrencyValue
     {
-        return $this->currencyValue;
+        return $this->value;
     }
 
-    public function currencyKind(): CurrencyKind
+    public function kind(): CurrencyKind
     {
-        return $this->currencyKind;
+        return $this->kind;
     }
 
     public function createdAt(): DateTimeImmutable

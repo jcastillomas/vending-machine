@@ -3,3 +3,4 @@ services:
         public: true
 
     test.VM\Context\Devices\Domain\Write\Repository\VendingMachineRepository: '@VM\Context\Devices\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineVendingMachineRepository'
+    test.VM\Context\Payment\Domain\Write\Repository\CurrencyRepository: '@VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineCurrencyRepository'

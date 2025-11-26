@@ -9,6 +9,6 @@ use VM\Context\Payment\Domain\Write\Aggregate\Currency;
 
 interface CurrencyRepository
 {
-    public function save(Currency $vendingMachine): void;
-    public function find(CurrencyId $vendingMachineId): Currency;
+    public function save(Currency $currency): void;
+    public function find(CurrencyId $currencyId): Currency;
 }

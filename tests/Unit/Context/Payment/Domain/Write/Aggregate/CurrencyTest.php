@@ -27,8 +27,8 @@ class CurrencyTest extends TestCase
         );
 
         $this->assertTrue($id->equalsTo($vendingMachine->id()));
-        $this->assertTrue($value->equalsTo($vendingMachine->currencyValue()));
-        $this->assertTrue($kind->equalsTo($vendingMachine->currencyKind()));
+        $this->assertTrue($value->equalsTo($vendingMachine->value()));
+        $this->assertTrue($kind->equalsTo($vendingMachine->kind()));
         $this->assertGreaterThan($datetime->getTimestamp(), $vendingMachine->createdAt()->getTimestamp());
         $this->assertEquals($vendingMachine->updatedAt(), null);
     }

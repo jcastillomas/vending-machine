@@ -3,4 +3,4 @@ doctrine_migrations:
         'DoctrineMigrations': '%kernel.project_dir%/config/doctrine/migrations'
     enable_profiler: false
     organize_migrations: BY_YEAR
-    em: devices
+    em: vm

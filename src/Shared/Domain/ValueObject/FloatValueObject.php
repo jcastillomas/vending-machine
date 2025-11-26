@@ -15,6 +15,11 @@ class FloatValueObject
         return new static($value);
     }
 
+    public static function fromString(mixed $value)
+    {
+        return new static(floatval($value));
+
+    }
     public function equalsTo(FloatValueObject $other): bool
     {
         return $this->value === $other->value()

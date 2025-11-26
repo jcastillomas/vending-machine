@@ -18,6 +18,6 @@ final class CurrencyValueStub
     {
         $faker = Factory::create();
 
-        return CurrencyValue::fromFloat($faker->randomFloat());
+        return CurrencyValue::fromFloat($faker->randomFloat(null, 0.001));
     }
 }
