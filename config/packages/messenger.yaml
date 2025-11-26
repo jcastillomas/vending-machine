@@ -1,0 +1,13 @@
+framework:
+    messenger:
+        buses:
+            messenger.bus.commands:
+                default_middleware: false
+                middleware:
+                    - doctrine_ping_connection
+                    - dispatch_after_current_bus
+                    - doctrine_transaction
+                    - handle_message
+
+        serializer:
+            default_serializer: VM\Shared\Infrastructure\Bus\Message\MessengerMessageSerializer

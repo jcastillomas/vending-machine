@@ -28,6 +28,7 @@
             <directory suffix=".php">../../src/Shared/Domain</directory>
             <directory suffix=".php">../../src/Shared/Application</directory>
             <directory suffix=".php">../../src/Context/*/Domain</directory>
+            <directory suffix=".php">../../src/Context/*/Application</directory>
         </include>
     </source>
 
