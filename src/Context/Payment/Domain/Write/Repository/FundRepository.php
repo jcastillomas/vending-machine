@@ -13,4 +13,5 @@ interface FundRepository
     public function save(Fund $fund): void;
     public function find(FundId $fundId): Fund;
     public function findByCurrencyId(CurrencyId $id): Fund;
+    public function findVendingMachine(): Fund;
 }

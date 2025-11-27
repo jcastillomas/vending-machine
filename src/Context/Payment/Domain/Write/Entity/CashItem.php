@@ -34,6 +34,11 @@ class CashItem extends Entity
         $this->amount = Amount::fromInt($this->amount->value() + 1);
     }
 
+    public function resetAmount(): void
+    {
+        $this->amount = Amount::fromInt(0);
+    }
+
     public function currencyId(): CurrencyId
     {
         return $this->currencyId;

@@ -32,6 +32,11 @@ class DoctrineFundRepository extends AggregateRepository implements FundReposito
         return $qb->getQuery()->getResult()[0];
     }
 
+    public function findVendingMachine(): Fund
+    {
+        return $this->doSearchByCriteria([])[0];
+    }
+
     protected function entityClassName(): string
     {
         return Fund::class;

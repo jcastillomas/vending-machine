@@ -50,4 +50,12 @@ class FundRepositoryMock
             ->shouldBeCalledOnce()
             ->willReturn($expectedFund);
     }
+
+    public function findVendingMachine(Fund $expectedFund)
+    {
+        $this->mock
+            ->findVendingMachine()
+            ->shouldBeCalledOnce()
+            ->willReturn($expectedFund);
+    }
 }

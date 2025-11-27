@@ -52,7 +52,9 @@ help:
 	@echo -e "    $(COLOR_YELLOW)cc				$(COLOR_PURPLE)-> $(COLOR_CYAN) Clear the cache $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-unit     	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute PHPUnit tests with coverage mode$(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-integration      	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute integration tests $(COLOR_NC)"
+	@echo -e "    $(COLOR_YELLOW)test-acceptance       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute Behat tests $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-all			$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute all tests $(COLOR_NC)"
+	@echo -e "    $(COLOR_YELLOW)fix-me			$(COLOR_PURPLE)-> $(COLOR_CYAN) Restore database to reload data of the VM$(COLOR_NC)"
 	@echo ""
 
 ## install: Creates the environment
@@ -83,7 +85,7 @@ cc:
 	@docker compose exec php-fpm /bin/bash -c "php bin/console cache:clear"
 
 ## Runs unit tests with coverage mode
-.PHONY: test-unit fix-me
+.PHONY: test-unit
 test-unit:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
 
@@ -94,13 +96,12 @@ test-integration:
 
 ## Runs all tests starting with unit then integration
 .PHONY: test-all
-test-all: test-unit test-integration fix-me
+test-all: test-unit test-integration test-acceptance fix-me
 
 ## Runs acceptance tests
-.PHONY: test-acceptance
+.PHONY: test-acceptance fix-me
 test-acceptance:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat  -c tests/Acceptance/behat.yml --colors ${parameters}"
-
 
 ## Restore DB, this command will help us to restore the DB data after tests, in order to set-up again the VM
 .PHONY: fix-me

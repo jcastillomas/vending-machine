@@ -51,6 +51,7 @@ class AddFundCommandHandlerTest extends TestCase
         $this->whenHandlingCommand($command);
         $this->expectNotToPerformAssertions();
         $this->currencyRepository->mock()->checkProphecyMethodsPredictions();
+        $this->fundRepository->mock()->checkProphecyMethodsPredictions();
     }
 
     private function givenACommand(): AddFundCommand
