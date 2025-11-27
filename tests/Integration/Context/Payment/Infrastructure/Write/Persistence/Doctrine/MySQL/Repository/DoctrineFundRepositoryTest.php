@@ -21,6 +21,13 @@ final class DoctrineFundRepositoryTest extends AggregateRepositoryTestCase
         $this->thenAFundIsFound($expectedFund);
     }
 
+    public function test_it_finds_fund_by_currency_id(): void
+    {
+        $expectedFund = $this->givenAFundWith();
+        $this->whenAFundIsSaved($expectedFund);
+        $this->thenAFundIsFoundByCurrencyId($expectedFund);
+    }
+
     private function givenAFundWith(): Fund
     {
         return Fund::create(
@@ -46,6 +53,17 @@ final class DoctrineFundRepositoryTest extends AggregateRepositoryTestCase
         $this->assertEquals($expectedFund->createdAt()->getTimestamp(), $actualFund->createdAt()->getTimestamp());
         $this->assertEquals($expectedFund->updatedAt()?->getTimestamp(), $actualFund->updatedAt()?->getTimestamp());
     }
+
+    private function thenAFundIsFoundByCurrencyId(Fund $expectedFund): void
+    {
+        $actualFund = $this->repository->findByCurrencyId($expectedFund->cashItems()->first()->currencyId());
+        $this->assertEquals($expectedFund->id(), $actualFund->id());
+        $this->assertEquals($expectedFund->vendingMachineId(), $actualFund->vendingMachineId());
+        $this->assertEquals($expectedFund->cashItems()->count(), $actualFund->cashItems()->count());
+        $this->assertEquals($expectedFund->createdAt()->getTimestamp(), $actualFund->createdAt()->getTimestamp());
+        $this->assertEquals($expectedFund->updatedAt()?->getTimestamp(), $actualFund->updatedAt()?->getTimestamp());
+    }
+
 
     protected function repository(): AggregateRepository
     {

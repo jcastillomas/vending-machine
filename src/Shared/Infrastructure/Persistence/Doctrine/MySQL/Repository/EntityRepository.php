@@ -22,6 +22,11 @@ abstract class EntityRepository
         return $this->getRepository()->find($id);
     }
 
+    protected function doSearchByCriteria(array $criteria)
+    {
+        return $this->getRepository()->findBy($criteria);
+    }
+
     protected function doFind(Id $id)
     {
         $entity = $this->doSearch($id);

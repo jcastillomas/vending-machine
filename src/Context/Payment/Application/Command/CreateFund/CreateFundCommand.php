@@ -62,6 +62,6 @@ class CreateFundCommand extends Command
 
     public static function messageName(): string
     {
-        return 'command.payment.create_cash';
+        return 'command.payment.create_fund';
     }
 }

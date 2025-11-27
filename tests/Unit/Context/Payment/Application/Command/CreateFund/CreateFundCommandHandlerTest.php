@@ -18,24 +18,24 @@ use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Repository\FundReposito
 
 class CreateFundCommandHandlerTest extends TestCase
 {
-    private FundRepositoryMock $currencyRepository;
+    private FundRepositoryMock $fundRepository;
     private CreateFundCommandHandler $handler;
 
     protected function setUp(): void
     {
         $prophet = new Prophet();
-        $this->currencyRepository = new FundRepositoryMock($prophet->prophesize(FundRepository::class));
-        $this->handler = new CreateFundCommandHandler($this->currencyRepository->reveal());
+        $this->fundRepository = new FundRepositoryMock($prophet->prophesize(FundRepository::class));
+        $this->handler = new CreateFundCommandHandler($this->fundRepository->reveal());
     }
 
-    public function test_it_should_create_a_currency_successfully()
+    public function test_it_should_create_a_fund_successfully()
     {
         $command = $this->givenACommand();
-        $currency = $this->givenFund($command);
-        $this->thenFundShouldBeSaved($currency);
+        $fund = $this->givenFund($command);
+        $this->thenFundShouldBeSaved($fund);
         $this->whenHandlingCommand($command);
         $this->expectNotToPerformAssertions();
-        $this->currencyRepository->mock()->checkProphecyMethodsPredictions();
+        $this->fundRepository->mock()->checkProphecyMethodsPredictions();
     }
 
     private function givenACommand(): CreateFundCommand
@@ -68,9 +68,9 @@ class CreateFundCommandHandlerTest extends TestCase
         );
     }
 
-    private function thenFundShouldBeSaved(Fund $currency)
+    private function thenFundShouldBeSaved(Fund $fund)
     {
-        $this->currencyRepository->shouldSave($currency);
+        $this->fundRepository->shouldSave($fund);
     }
 
     private function whenHandlingCommand(CreateFundCommand $command): void

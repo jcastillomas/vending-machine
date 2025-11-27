@@ -7,6 +7,7 @@ namespace VM\Tests\Infrastructure\Context\Payment\Domain\Write\Repository;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use VM\Context\Payment\Domain\Write\Aggregate\Fund;
+use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyId;
 use VM\Context\Payment\Domain\Write\Repository\FundRepository;
 use VM\Shared\Domain\Service\Assertion\Assert;
 
@@ -40,5 +41,13 @@ class FundRepositoryMock
                 return true;
             }))
             ->shouldBeCalledOnce();
+    }
+
+    public function findByCurrencyId(CurrencyId $currencyId, Fund $expectedFund)
+    {
+        $this->mock
+            ->findByCurrencyId($currencyId)
+            ->shouldBeCalledOnce()
+            ->willReturn($expectedFund);
     }
 }

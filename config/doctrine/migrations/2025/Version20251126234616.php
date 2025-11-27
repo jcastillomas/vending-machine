@@ -21,8 +21,8 @@ final class Version20251126234616 extends AbstractMigration
     {
         $this->addSql("INSERT INTO vending_machine.vending_machine (id, created_at, updated_at) VALUES ('fcbdd279-52f8-4428-87f4-1e9544b9ae1c', '2025-11-26 23:42:56', null);");
         $this->addSql("
-            INSERT INTO vending_machine.product (name, value, created_at, updated_at, id) VALUES ('Juice', '1.00', '2025-11-26 23:42:56', null, '9bade147-51fb-489e-a967-5ff8093db877');
-            INSERT INTO vending_machine.product (name, value, created_at, updated_at, id) VALUES ('Soda', '1.50', '2025-11-26 23:42:56', null, 'a0a59ca7-dce9-400d-8d29-e17a01f4c72c');
+            INSERT INTO vending_machine.product (name, value, created_at, updated_at, id) VALUES ('Juice', '1', '2025-11-26 23:42:56', null, '9bade147-51fb-489e-a967-5ff8093db877');
+            INSERT INTO vending_machine.product (name, value, created_at, updated_at, id) VALUES ('Soda', '1.5', '2025-11-26 23:42:56', null, 'a0a59ca7-dce9-400d-8d29-e17a01f4c72c');
             INSERT INTO vending_machine.product (name, value, created_at, updated_at, id) VALUES ('Water', '0.65', '2025-11-26 23:42:56', null, 'b6eda59d-4774-4467-a1b5-56dd50c903ff');
         ");
         $this->addSql("INSERT INTO vending_machine.stock (vending_machine_id, created_at, updated_at, id) VALUES ('fcbdd279-52f8-4428-87f4-1e9544b9ae1c', '2025-11-26 23:42:56', null, 'ed943bb3-8947-4806-b71d-015f65a047d2');");
@@ -37,9 +37,9 @@ final class Version20251126234616 extends AbstractMigration
             INSERT INTO vending_machine.stock_stock_item (stock_id, stock_item_id) VALUES ('ed943bb3-8947-4806-b71d-015f65a047d2', '592ee815-04f7-416f-b9d2-e21f42dfd832');
         ");
         $this->addSql("
-            INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('1.00', 'EUR', '2025-11-26 23:42:56', null, '7c85277c-12d7-4f34-a03b-533e7f4b6c03');
+            INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('1', 'EUR', '2025-11-26 23:42:56', null, '7c85277c-12d7-4f34-a03b-533e7f4b6c03');
             INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('0.05', 'EUR', '2025-11-26 23:42:56', null, '995e9deb-da13-48e0-abaa-0198b9f923e1');
-            INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('0.10', 'EUR', '2025-11-26 23:42:56', null, 'e62ae603-0131-4406-acef-b9a825eb1755');
+            INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('0.1', 'EUR', '2025-11-26 23:42:56', null, 'e62ae603-0131-4406-acef-b9a825eb1755');
             INSERT INTO vending_machine.currency (value, kind, created_at, updated_at, id) VALUES ('0.25', 'EUR', '2025-11-26 23:42:56', null, 'f11d5711-6d26-4082-aac2-ed873ebe8282');
         ");
         $this->addSql("INSERT INTO vending_machine.cash (vending_machine_id, created_at, updated_at, id) VALUES ('fcbdd279-52f8-4428-87f4-1e9544b9ae1c', '2025-11-26 23:42:56', null, '295e759c-c8d6-4b2d-9cc6-639ca3dbd346');");

@@ -11,13 +11,13 @@ use VM\Shared\Application\Bus\Command\CommandHandlerInterface;
 class CreateFundCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private FundRepository $cashRepository
+        private FundRepository $fundRepository
     ) {
     }
 
     public function __invoke(CreateFundCommand $command)
     {
-        $this->cashRepository->save(
+        $this->fundRepository->save(
             Fund::create(
                 $command->id(),
                 $command->vendingMachineId(),

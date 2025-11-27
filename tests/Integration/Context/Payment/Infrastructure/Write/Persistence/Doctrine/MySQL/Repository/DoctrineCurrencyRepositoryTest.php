@@ -21,6 +21,13 @@ final class DoctrineCurrencyRepositoryTest extends AggregateRepositoryTestCase
         $this->thenACurrencyIsFound($expectedCurrency);
     }
 
+    public function test_it_finds_by_value(): void
+    {
+        $expectedCurrency = $this->givenACurrencyWith();
+        $this->whenACurrencyIsSaved($expectedCurrency);
+        $this->thenACurrencyIsFoundByCurrencyValue($expectedCurrency);
+    }
+
     private function givenACurrencyWith(): Currency
     {
         return Currency::create(
@@ -40,6 +47,14 @@ final class DoctrineCurrencyRepositoryTest extends AggregateRepositoryTestCase
     private function thenACurrencyIsFound(Currency $expectedCurrency): void
     {
         $actualCurrency = $this->repository->find($expectedCurrency->id());
+        $this->assertEquals($expectedCurrency->id(), $actualCurrency->id());
+        $this->assertEquals($expectedCurrency->createdAt()->getTimestamp(), $actualCurrency->createdAt()->getTimestamp());
+        $this->assertEquals($expectedCurrency->updatedAt()?->getTimestamp(), $actualCurrency->updatedAt()?->getTimestamp());
+    }
+
+    private function thenACurrencyIsFoundByCurrencyValue(Currency $expectedCurrency): void
+    {
+        $actualCurrency = $this->repository->findByValue($expectedCurrency->value());
         $this->assertEquals($expectedCurrency->id(), $actualCurrency->id());
         $this->assertEquals($expectedCurrency->createdAt()->getTimestamp(), $actualCurrency->createdAt()->getTimestamp());
         $this->assertEquals($expectedCurrency->updatedAt()?->getTimestamp(), $actualCurrency->updatedAt()?->getTimestamp());

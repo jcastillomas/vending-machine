@@ -7,6 +7,7 @@ namespace VM\Tests\Infrastructure\Context\Payment\Domain\Write\Repository;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use VM\Context\Payment\Domain\Write\Aggregate\Currency;
+use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
 use VM\Context\Payment\Domain\Write\Repository\CurrencyRepository;
 use VM\Shared\Domain\Service\Assertion\Assert;
 
@@ -40,5 +41,13 @@ class CurrencyRepositoryMock
                 return true;
             }))
             ->shouldBeCalledOnce();
+    }
+
+    public function shouldFindByValue(CurrencyValue $CurrencyValue, Currency $expectedCurrency)
+    {
+        $this->mock
+            ->findByValue($CurrencyValue)
+            ->shouldBeCalledOnce()
+            ->willReturn($expectedCurrency);
     }
 }

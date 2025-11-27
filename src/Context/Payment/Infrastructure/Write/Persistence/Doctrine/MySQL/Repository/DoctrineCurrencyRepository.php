@@ -6,6 +6,7 @@ namespace VM\Context\Payment\Infrastructure\Write\Persistence\Doctrine\MySQL\Rep
 
 use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyId;
 use VM\Context\Payment\Domain\Write\Aggregate\Currency;
+use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
 use VM\Context\Payment\Domain\Write\Repository\CurrencyRepository;
 use VM\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
 
@@ -18,7 +19,12 @@ class DoctrineCurrencyRepository extends AggregateRepository implements Currency
 
     public function find(CurrencyId $currencyId): Currency
     {
-        return $this->doFind($currencyId);
+        return $this->doSearch($currencyId);
+    }
+
+    public function findByValue(CurrencyValue $currencyValue): Currency
+    {
+        return $this->doSearchByCriteria(['value' => $currencyValue])[0];
     }
 
     protected function entityClassName(): string
