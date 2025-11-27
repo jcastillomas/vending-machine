@@ -1,0 +1,16 @@
+default:
+    suites:
+        health:
+            paths: [ tests/Acceptance/Health ]
+            contexts:
+                - VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext
+        payment:
+            paths: [ tests/Acceptance/Payment ]
+            contexts:
+                - VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: 'config/bootstrap.php'
+            kernel:
+                class: VM\Kernel
+                environment: test

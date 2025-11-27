@@ -83,15 +83,28 @@ cc:
 	@docker compose exec php-fpm /bin/bash -c "php bin/console cache:clear"
 
 ## Runs unit tests with coverage mode
-.PHONY: test-unit
+.PHONY: test-unit fix-me
 test-unit:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
 
 ## Runs unit integration tests
-.PHONY: test-integration
+.PHONY: test-integration fix-me
 test-integration:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"
 
 ## Runs all tests starting with unit then integration
 .PHONY: test-all
-test-all: test-unit test-integration
+test-all: test-unit test-integration fix-me
+
+## Runs acceptance tests
+.PHONY: test-acceptance
+test-acceptance:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat  -c tests/Acceptance/behat.yml --colors ${parameters}"
+
+
+## Restore DB, this command will help us to restore the DB data after tests, in order to set-up again the VM
+.PHONY: fix-me
+fix-me:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=off bin/console doctrine:database:drop -f || true"
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=off bin/console doctrine:database:create"
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=off bin/console doctrine:migrations:migrate --no-interaction"

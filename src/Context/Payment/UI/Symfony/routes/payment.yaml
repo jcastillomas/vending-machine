@@ -1,0 +1,4 @@
+insert-coin:
+  path: /insert-coin
+  controller: VM\Context\Payment\UI\Controller\AddCoinController
+  methods:  [POST]
