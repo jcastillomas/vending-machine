@@ -1,5 +1,7 @@
 framework:
     messenger:
+        default_bus: messenger.bus.queries
+
         buses:
             messenger.bus.commands:
                 default_middleware: false
@@ -8,6 +10,9 @@ framework:
                     - dispatch_after_current_bus
                     - doctrine_transaction
                     - handle_message
-
+            messenger.bus.queries:
+                default_middleware: false
+                middleware:
+                    - handle_message
         serializer:
             default_serializer: VM\Shared\Infrastructure\Bus\Message\MessengerMessageSerializer

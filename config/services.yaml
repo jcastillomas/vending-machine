@@ -20,6 +20,10 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: messenger.bus.commands }
 
+        VM\Shared\Application\Bus\Query\QueryHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: messenger.bus.queries }
+
     message.message_factory:
         alias: VM\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory
 
@@ -27,3 +31,8 @@ services:
         class: VM\Shared\Infrastructure\Bus\Command\MessengerCommandBus
         arguments:
             - '@messenger.bus.commands'
+
+    shared.application.query_bus:
+        class: VM\Shared\Infrastructure\Bus\Query\MessengerQueryBus
+        arguments:
+            - '@messenger.bus.queries'
