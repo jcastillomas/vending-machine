@@ -29,6 +29,11 @@ class StockItem extends Entity
         return $stockItem;
     }
 
+    public function setAmount(Amount $amount)
+    {
+        $this->amount = $amount;
+    }
+
     public function productId(): ProductId
     {
         return $this->productId;

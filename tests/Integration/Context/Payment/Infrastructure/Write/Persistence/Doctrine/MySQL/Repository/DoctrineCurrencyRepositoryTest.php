@@ -16,26 +16,26 @@ final class DoctrineCurrencyRepositoryTest extends AggregateRepositoryTestCase
 {
     public function test_it_saves_and_finds_a_currency(): void
     {
-        $expectedCurrency = $this->givenACurrencyWith();
+        $expectedCurrency = $this->givenACurrency();
         $this->whenACurrencyIsSaved($expectedCurrency);
         $this->thenACurrencyIsFound($expectedCurrency);
     }
 
     public function test_it_finds_by_value(): void
     {
-        $expectedCurrency = $this->givenACurrencyWith();
+        $expectedCurrency = $this->givenACurrency();
         $this->whenACurrencyIsSaved($expectedCurrency);
         $this->thenACurrencyIsFoundByCurrencyValue($expectedCurrency);
     }
 
     public function test_it_finds_all_currencies(): void
     {
-        $expectedCurrency = $this->givenACurrencyWith();
+        $expectedCurrency = $this->givenACurrency();
         $this->whenACurrencyIsSaved($expectedCurrency);
         $this->thenCurrenciesAreFound([$expectedCurrency]);
     }
 
-    private function givenACurrencyWith(): Currency
+    private function givenACurrency(): Currency
     {
         return Currency::create(
             CurrencyIdStub::random(),

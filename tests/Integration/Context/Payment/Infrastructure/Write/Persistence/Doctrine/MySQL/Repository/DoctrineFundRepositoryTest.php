@@ -16,26 +16,26 @@ final class DoctrineFundRepositoryTest extends AggregateRepositoryTestCase
 {
     public function test_it_saves_and_finds_fund(): void
     {
-        $expectedFund = $this->givenAFundWith();
+        $expectedFund = $this->givenAFund();
         $this->whenAFundIsSaved($expectedFund);
         $this->thenAFundIsFound($expectedFund);
     }
 
     public function test_it_finds_fund_by_currency_id(): void
     {
-        $expectedFund = $this->givenAFundWith();
+        $expectedFund = $this->givenAFund();
         $this->whenAFundIsSaved($expectedFund);
         $this->thenAFundIsFoundByCurrencyId($expectedFund);
     }
 
     public function test_it_finds_fund_vending_machine(): void
     {
-        $expectedFund = $this->givenAFundWith();
+        $expectedFund = $this->givenAFund();
         $this->whenAFundIsSaved($expectedFund);
         $this->thenVendingMachineFundIsFound($expectedFund);
     }
 
-    private function givenAFundWith(): Fund
+    private function givenAFund(): Fund
     {
         return Fund::create(
             FundIdStub::random(),

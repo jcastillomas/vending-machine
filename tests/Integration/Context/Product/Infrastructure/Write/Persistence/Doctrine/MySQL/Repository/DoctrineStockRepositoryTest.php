@@ -16,12 +16,26 @@ final class DoctrineStockRepositoryTest extends AggregateRepositoryTestCase
 {
     public function test_it_saves_and_finds_stock(): void
     {
-        $expectedStock = $this->givenAStockWith();
+        $expectedStock = $this->givenAStock();
         $this->whenAStockIsSaved($expectedStock);
         $this->thenAStockIsFound($expectedStock);
     }
 
-    private function givenAStockWith(): Stock
+    public function test_it_finds_stock_by_product_id(): void
+    {
+        $expectedStock = $this->givenAStock();
+        $this->whenAStockIsSaved($expectedStock);
+        $this->thenAStockIsFoundByProductId($expectedStock);
+    }
+
+    public function test_it_finds_stock_vending_machine(): void
+    {
+        $expectedStock = $this->givenAStock();
+        $this->whenAStockIsSaved($expectedStock);
+        $this->thenVendingMachineStockIsFound($expectedStock);
+    }
+
+    private function givenAStock(): Stock
     {
         return Stock::create(
             StockIdStub::random(),
@@ -40,6 +54,26 @@ final class DoctrineStockRepositoryTest extends AggregateRepositoryTestCase
     private function thenAStockIsFound(Stock $expectedStock): void
     {
         $actualStock = $this->repository->find($expectedStock->id());
+        $this->assertEquals($expectedStock->id(), $actualStock->id());
+        $this->assertEquals($expectedStock->vendingMachineId(), $actualStock->vendingMachineId());
+        $this->assertEquals($expectedStock->stockItems()->count(), $actualStock->stockItems()->count());
+        $this->assertEquals($expectedStock->createdAt()->getTimestamp(), $actualStock->createdAt()->getTimestamp());
+        $this->assertEquals($expectedStock->updatedAt()?->getTimestamp(), $actualStock->updatedAt()?->getTimestamp());
+    }
+
+    private function thenAStockIsFoundByProductId(Stock $expectedStock): void
+    {
+        $actualStock = $this->repository->findByProductId($expectedStock->stockItems()->first()->productId());
+        $this->assertEquals($expectedStock->id(), $actualStock->id());
+        $this->assertEquals($expectedStock->vendingMachineId(), $actualStock->vendingMachineId());
+        $this->assertEquals($expectedStock->stockItems()->count(), $actualStock->stockItems()->count());
+        $this->assertEquals($expectedStock->createdAt()->getTimestamp(), $actualStock->createdAt()->getTimestamp());
+        $this->assertEquals($expectedStock->updatedAt()?->getTimestamp(), $actualStock->updatedAt()?->getTimestamp());
+    }
+
+    private function thenVendingMachineStockIsFound(Stock $expectedStock): void
+    {
+        $actualStock = $this->repository->findVendingMachine();
         $this->assertEquals($expectedStock->id(), $actualStock->id());
         $this->assertEquals($expectedStock->vendingMachineId(), $actualStock->vendingMachineId());
         $this->assertEquals($expectedStock->stockItems()->count(), $actualStock->stockItems()->count());

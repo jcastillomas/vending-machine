@@ -11,7 +11,7 @@ use VM\Shared\Domain\Service\Assertion\AssertionFailedException;
 
 final class CurrencyValueTest extends TestCase
 {
-    const MIN = 0.00001;
+    const MIN = 0.001;
 
     public function test_it_throws_exception_when_zero_is_given(): void
     {

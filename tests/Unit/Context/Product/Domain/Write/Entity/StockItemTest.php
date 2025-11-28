@@ -7,6 +7,7 @@ namespace VM\Tests\Unit\Context\Product\Domain\Write\Entity;
 use PHPUnit\Framework\TestCase;
 use VM\Context\Product\Domain\Write\Entity\StockItem;
 use VM\Tests\Infrastructure\Context\Product\Domain\Write\Aggregate\ValueObject\ProductIdStub;
+use VM\Tests\Infrastructure\Context\Product\Domain\Write\Entity\StockItemStub;
 use VM\Tests\Infrastructure\Context\Product\Domain\Write\Entity\ValueObject\AmountStub;
 use VM\Tests\Infrastructure\Context\Product\Domain\Write\Entity\ValueObject\StockItemIdStub;
 
@@ -30,5 +31,13 @@ class StockItemTest extends TestCase
         $this->assertTrue($amount->equalsTo($stockItem->amount()));
         $this->assertGreaterThan($datetime->getTimestamp(), $stockItem->createdAt()->getTimestamp());
         $this->assertEquals($stockItem->updatedAt(), null);
+    }
+
+    public function test_it_set_amount(): void
+    {
+        $expectedAmount = AmountStub::random();
+        $stockItem = StockItemStub::random();
+        $stockItem->setAmount($expectedAmount);
+        $this->assertTrue($expectedAmount->equalsTo($stockItem->amount()));
     }
 }

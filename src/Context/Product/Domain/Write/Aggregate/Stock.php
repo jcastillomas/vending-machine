@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace VM\Context\Product\Domain\Write\Aggregate;
 
 use DateTimeImmutable;
-use VM\Context\Product\Domain\Write\Aggregate\ValueObject\ProductId;
 use VM\Context\Product\Domain\Write\Aggregate\ValueObject\StockId;
 use VM\Context\Product\Domain\Write\Aggregate\ValueObject\VendingMachineId;
 use VM\Context\Product\Domain\Write\Entity\StockItems;

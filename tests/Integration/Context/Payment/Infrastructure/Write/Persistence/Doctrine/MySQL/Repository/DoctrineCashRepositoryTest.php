@@ -16,12 +16,12 @@ final class DoctrineCashRepositoryTest extends AggregateRepositoryTestCase
 {
     public function test_it_saves_and_finds_cash(): void
     {
-        $expectedCash = $this->givenACashWith();
+        $expectedCash = $this->givenACash();
         $this->whenACashIsSaved($expectedCash);
         $this->thenACashIsFound($expectedCash);
     }
 
-    private function givenACashWith(): Cash
+    private function givenACash(): Cash
     {
         return Cash::create(
             CashIdStub::random(),

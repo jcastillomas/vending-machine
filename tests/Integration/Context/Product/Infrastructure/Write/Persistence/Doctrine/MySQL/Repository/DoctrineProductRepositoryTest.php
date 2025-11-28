@@ -16,12 +16,19 @@ final class DoctrineProductRepositoryTest extends AggregateRepositoryTestCase
 {
     public function test_it_saves_and_finds_a_product(): void
     {
-        $expectedProduct = $this->givenAProductWith();
+        $expectedProduct = $this->givenAProduct();
         $this->whenAProductIsSaved($expectedProduct);
         $this->thenAProductIsFound($expectedProduct);
     }
 
-    private function givenAProductWith(): Product
+    public function test_it_finds_by_name(): void
+    {
+        $expectedProduct = $this->givenAProduct();
+        $this->whenAProductIsSaved($expectedProduct);
+        $this->thenAProductIsFoundByProductValue($expectedProduct);
+    }
+
+    private function givenAProduct(): Product
     {
         return Product::create(
             ProductIdStub::random(),
@@ -40,6 +47,14 @@ final class DoctrineProductRepositoryTest extends AggregateRepositoryTestCase
     private function thenAProductIsFound(Product $expectedProduct): void
     {
         $actualProduct = $this->repository->find($expectedProduct->id());
+        $this->assertEquals($expectedProduct->id(), $actualProduct->id());
+        $this->assertEquals($expectedProduct->createdAt()->getTimestamp(), $actualProduct->createdAt()->getTimestamp());
+        $this->assertEquals($expectedProduct->updatedAt()?->getTimestamp(), $actualProduct->updatedAt()?->getTimestamp());
+    }
+
+    private function thenAProductIsFoundByProductValue(Product $expectedProduct): void
+    {
+        $actualProduct = $this->repository->findByName($expectedProduct->name());
         $this->assertEquals($expectedProduct->id(), $actualProduct->id());
         $this->assertEquals($expectedProduct->createdAt()->getTimestamp(), $actualProduct->createdAt()->getTimestamp());
         $this->assertEquals($expectedProduct->updatedAt()?->getTimestamp(), $actualProduct->updatedAt()?->getTimestamp());
