@@ -1,0 +1,18 @@
+currencies:
+  - value: "1"
+    kind: "EUR"
+    created_at: "2025-11-26 23:42:56"
+    id: "7c85277c-12d7-4f34-a03b-533e7f4b6c03"
+  - value: "0.05"
+    kind: "EUR"
+    created_at: "2025-11-26 23:42:56"
+    id: "995e9deb-da13-48e0-abaa-0198b9f923e1"
+  - value: "0.1"
+    kind: "EUR"
+    created_at: "2025-11-26 23:42:56"
+    id: "e62ae603-0131-4406-acef-b9a825eb1755"
+  - value: "0.25"
+    kind: "EUR"
+    created_at: "2025-11-26 23:42:56"
+    id: "f11d5711-6d26-4082-aac2-ed873ebe8282"
+

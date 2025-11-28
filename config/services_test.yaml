@@ -12,4 +12,7 @@ services:
     VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext:
         arguments:
             - '@kernel'
+    VM\Tests\Infrastructure\Acceptance\Behat\Context\PaymentContext:
+        arguments:
+            - '@kernel'
 

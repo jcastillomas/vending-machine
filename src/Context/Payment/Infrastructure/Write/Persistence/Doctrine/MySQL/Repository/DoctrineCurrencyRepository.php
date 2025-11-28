@@ -27,6 +27,11 @@ class DoctrineCurrencyRepository extends AggregateRepository implements Currency
         return $this->doSearchByCriteria(['value' => $currencyValue])[0];
     }
 
+    public function findCurrencies(): array
+    {
+        return $this->doSearchByCriteria([]);
+    }
+
     protected function entityClassName(): string
     {
         return Currency::class;

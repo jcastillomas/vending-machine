@@ -28,6 +28,13 @@ final class DoctrineCurrencyRepositoryTest extends AggregateRepositoryTestCase
         $this->thenACurrencyIsFoundByCurrencyValue($expectedCurrency);
     }
 
+    public function test_it_finds_all_currencies(): void
+    {
+        $expectedCurrency = $this->givenACurrencyWith();
+        $this->whenACurrencyIsSaved($expectedCurrency);
+        $this->thenCurrenciesAreFound([$expectedCurrency]);
+    }
+
     private function givenACurrencyWith(): Currency
     {
         return Currency::create(
@@ -58,6 +65,12 @@ final class DoctrineCurrencyRepositoryTest extends AggregateRepositoryTestCase
         $this->assertEquals($expectedCurrency->id(), $actualCurrency->id());
         $this->assertEquals($expectedCurrency->createdAt()->getTimestamp(), $actualCurrency->createdAt()->getTimestamp());
         $this->assertEquals($expectedCurrency->updatedAt()?->getTimestamp(), $actualCurrency->updatedAt()?->getTimestamp());
+    }
+
+    private function thenCurrenciesAreFound(array $expectedCurrencies): void
+    {
+        $actualCurrencies = $this->repository->findCurrencies();
+        $this->assertEquals(count($expectedCurrencies), count($actualCurrencies));
     }
 
     protected function repository(): AggregateRepository

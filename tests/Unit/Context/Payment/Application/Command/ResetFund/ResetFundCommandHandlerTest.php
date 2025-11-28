@@ -56,7 +56,7 @@ class ResetFundCommandHandlerTest extends TestCase
 
     private function thenVendingMachineFundShouldBeFound(Fund $fund)
     {
-        $this->fundRepository->findVendingMachine($fund);
+        $this->fundRepository->shouldFindVendingMachine($fund);
     }
 
     private function thenFundShouldBeSaved(Fund $fund)

@@ -90,18 +90,20 @@ test-unit:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
 
 ## Runs unit integration tests
-.PHONY: test-integration fix-me
-test-integration:
+.PHONY: test-integration
+test-integration: __run-test-integration fix-me
+__run-test-integration:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"
 
 ## Runs all tests starting with unit then integration
 .PHONY: test-all
-test-all: test-unit test-integration test-acceptance fix-me
+test-all: test-unit test-integration test-acceptance
 
 ## Runs acceptance tests
-.PHONY: test-acceptance fix-me
-test-acceptance:
-	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat  -c tests/Acceptance/behat.yml --colors ${parameters}"
+.PHONY: test-acceptance
+test-acceptance: __run-test-acceptance fix-me
+__run-test-acceptance:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat -c tests/Acceptance/behat.yml --colors ${parameters}"
 
 ## Restore DB, this command will help us to restore the DB data after tests, in order to set-up again the VM
 .PHONY: fix-me

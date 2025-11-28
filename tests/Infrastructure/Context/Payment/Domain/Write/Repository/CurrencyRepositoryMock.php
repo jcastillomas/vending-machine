@@ -50,4 +50,12 @@ class CurrencyRepositoryMock
             ->shouldBeCalledOnce()
             ->willReturn($expectedCurrency);
     }
+
+    public function shouldFindCurrencies(array $expectedCurrencies)
+    {
+        $this->mock
+            ->findCurrencies()
+            ->shouldBeCalledOnce()
+            ->willReturn($expectedCurrencies);
+    }
 }

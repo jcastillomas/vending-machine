@@ -94,7 +94,7 @@ class AddFundCommandHandlerTest extends TestCase
 
     private function thenFundShouldBeFoubdByCurrencyId(CurrencyId $currencyId, Fund $fund)
     {
-        $this->fundRepository->findByCurrencyId($currencyId, $fund);
+        $this->fundRepository->shouldFindByCurrencyId($currencyId, $fund);
     }
 
     private function thenFundShouldBeSaved(Fund $fund)

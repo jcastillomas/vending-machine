@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "beberlei/assert": "^3.3",
         "doctrine/doctrine-bundle": "^3.0",
+        "doctrine/doctrine-fixtures-bundle": "^4.3",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.5",
         "fakerphp/faker": "^1.24",

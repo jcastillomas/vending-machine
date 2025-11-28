@@ -64,6 +64,6 @@ final class GetFundQueryHandlerTest extends TestCase
 
     private function thenFundShouldBeFound(Fund $fund): void
     {
-        $this->fundRepository->findVendingMachine($fund);
+        $this->fundRepository->shouldFindVendingMachine($fund);
     }
 }

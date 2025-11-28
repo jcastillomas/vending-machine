@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace VM\Tests\Infrastructure\Acceptance\Behat\Context;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use VM\Shared\Domain\Service\Assertion\Assert;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-final class ApiContext implements Context
+final class ApiContext extends BaseContext
 {
     private const AUTHORIZATION = 'Authorization';
 
@@ -23,7 +22,7 @@ final class ApiContext implements Context
     public function __construct(
         KernelInterface $kernel,
     ) {
-        $this->kernel = $kernel;
+        parent::__construct($kernel);
         $this->requestHeaders = [];
         $this->parameters = [];
     }

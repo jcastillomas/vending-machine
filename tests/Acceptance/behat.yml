@@ -8,6 +8,7 @@ default:
             paths: [ tests/Acceptance/Payment ]
             contexts:
                 - VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext
+                - VM\Tests\Infrastructure\Acceptance\Behat\Context\PaymentContext
     extensions:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: 'config/bootstrap.php'

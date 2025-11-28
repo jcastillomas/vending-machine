@@ -13,4 +13,5 @@ interface CurrencyRepository
     public function save(Currency $currency): void;
     public function find(CurrencyId $currencyId): Currency;
     public function findByValue(CurrencyValue $currencyValue): Currency;
+    public function findCurrencies(): array;
 }

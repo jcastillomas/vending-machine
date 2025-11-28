@@ -43,7 +43,7 @@ class FundRepositoryMock
             ->shouldBeCalledOnce();
     }
 
-    public function findByCurrencyId(CurrencyId $currencyId, Fund $expectedFund)
+    public function shouldFindByCurrencyId(CurrencyId $currencyId, Fund $expectedFund)
     {
         $this->mock
             ->findByCurrencyId($currencyId)
@@ -51,7 +51,7 @@ class FundRepositoryMock
             ->willReturn($expectedFund);
     }
 
-    public function findVendingMachine(Fund $expectedFund)
+    public function shouldFindVendingMachine(Fund $expectedFund)
     {
         $this->mock
             ->findVendingMachine()
