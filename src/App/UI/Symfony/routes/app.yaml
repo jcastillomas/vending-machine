@@ -1,0 +1,4 @@
+serive:
+  path: /service
+  controller: VM\App\UI\Controller\Service\ServiceController
+  methods:  [PUT]
