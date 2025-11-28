@@ -4,6 +4,11 @@ default:
             paths: [ tests/Acceptance/Health ]
             contexts:
                 - VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext
+        app:
+            paths: [ tests/Acceptance/App ]
+            contexts:
+                - VM\Tests\Infrastructure\Acceptance\Behat\Context\ApiContext
+                - VM\Tests\Infrastructure\Acceptance\Behat\Context\PaymentContext
         payment:
             paths: [ tests/Acceptance/Payment ]
             contexts:

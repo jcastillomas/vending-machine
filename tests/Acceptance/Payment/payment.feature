@@ -1,7 +1,4 @@
-Feature: Health check
-  In order to check the availability of the service
-  As unauthenticated User
-  I need to be able to check the service status
+Feature: payment
 
   Scenario: It receives a valid request to insert a coin
     When I send a "POST" request to "/insert-coin" with body

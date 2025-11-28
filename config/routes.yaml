@@ -1,4 +1,6 @@
 health:
     resource: '../src/Shared/UI/Symfony/routes/health.yaml'
+app:
+    resource: '../src/App/UI/Symfony/routes/app.yaml'
 payment:
     resource: '../src/Context/Payment/UI/Symfony/routes/payment.yaml'
