@@ -7,7 +7,7 @@ namespace VM\Context\Payment\Application\Query\GetCurrencies;
 use VM\Context\Payment\Domain\Write\Repository\CurrencyRepository;
 use VM\Shared\Application\Bus\Query\QueryHandlerInterface;
 
-final class GetCurrenciesQueryHandler implements QueryHandlerInterface
+class GetCurrenciesQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
         private CurrencyRepository $currencyRepository,

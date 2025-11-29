@@ -12,6 +12,6 @@ final class AmountStub
     public static function random(): Amount
     {
         $faker = Factory::create();
-        return Amount::fromInt($faker->randomNumber());
+        return Amount::fromInt($faker->randomNumber() + 1);
     }
 }
