@@ -8,11 +8,29 @@ use VM\Shared\Application\Bus\Command\Command;
 
 final class ServiceCommand extends Command
 {
+    public const STOCK = 'stock';
+    public const STOCK_NAME = 'stock_name';
+    public const PRODUCT_NAME = 'product_name';
+    public const STOCK_AMOUNT = 'stock_amount';
+
     public static function create(
         array $stock,
         array $cash,
     ): ServiceCommand {
-        return new self([]);
+        return new self([
+            self::STOCK => $stock
+        ]);
+    }
+
+    public function stock(): array
+    {
+        return array_map(
+            fn (array $stockItem) => [
+                self::STOCK_NAME => $stockItem[self::PRODUCT_NAME],
+                self::STOCK_AMOUNT => $stockItem[self::STOCK],
+            ],
+            $this->get(self::STOCK)
+        );
     }
 
     protected function version(): string
