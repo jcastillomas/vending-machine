@@ -57,3 +57,18 @@ Feature: app
       """
       []
       """
+
+  Scenario: It receives a valid request to buy an item
+    When I send a "GET" request to "/get-item" with body
+      """
+      "Water"
+      """
+    Then the response code should be 200
+    And the response body should be:
+      """
+      [
+        "WATER",
+        "0.25",
+        "0.10"
+      ]
+      """

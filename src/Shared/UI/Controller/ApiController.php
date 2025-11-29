@@ -9,7 +9,8 @@ use VM\Shared\Application\Bus\Command\Command;
 use VM\Shared\Application\Bus\Command\CommandBusInterface;
 use VM\Shared\Application\Bus\Query\Query;
 use VM\Shared\Application\Bus\Query\QueryBusInterface;
-use VM\Shared\Application\Bus\Query\Response;
+use VM\Shared\Application\Bus\Query\Response as QueryResponse;
+use VM\Shared\Application\Bus\Command\Response as CommandResponse;
 
 abstract class ApiController extends AbstractController
 {
@@ -25,7 +26,13 @@ abstract class ApiController extends AbstractController
         $this->commandBus->dispatch($command);
     }
 
-    protected function ask(Query $query): ?Response
+    protected function dispatchWithResponse(
+        Command $command,
+    ): ?CommandResponse {
+        return $this->commandBus->dispatchWithResponse($command);
+    }
+
+    protected function ask(Query $query): ?QueryResponse
     {
         return $this->queryBus->ask($query);
     }

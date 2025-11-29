@@ -1,4 +1,8 @@
-serive:
-  path: /service
-  controller: VM\App\UI\Controller\Service\ServiceController
-  methods:  [PUT]
+service:
+    path: /service
+    controller: VM\App\UI\Controller\Service\ServiceController
+    methods:  [PUT]
+get-item:
+    path: /get-item
+    controller: VM\App\UI\Controller\Service\BuyItemController
+    methods:  [GET]
