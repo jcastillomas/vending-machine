@@ -27,9 +27,6 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
 
     /*
         TODO: @Buy item use case:
-            2. Find Currencies
-            3. Find Fund
-            4. Check fund amount and product value
             5. Calculate change
             6. Find Cash
             7. Calculate change in Cash
