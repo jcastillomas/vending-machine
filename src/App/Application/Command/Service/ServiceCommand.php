@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace VM\App\Application\Command\Service;
 
-use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
-use VM\Context\Payment\Domain\Write\Entity\ValueObject\Amount;
 use VM\Shared\Application\Bus\Command\Command;
 
 final class ServiceCommand extends Command

@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace VM\App\Application\Command\BuyItem;
 
+use VM\Context\Product\Application\Query\GetProduct\GetProductQuery;
+use VM\Context\Product\Application\Query\GetProduct\GetProductQueryHandler;
 use VM\Shared\Application\Bus\Command\CommandHandlerInterface;
 
 final readonly class BuyItemCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private BuyItemCommandResponseConverter $responseConverter
+        private BuyItemCommandResponseConverter $responseConverter,
+        private GetProductQueryHandler $getProductQueryHandler,
     ) {
     }
 
@@ -45,6 +48,8 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
      */
     public function __invoke(BuyItemCommand $command): BuyItemCommandResponse
     {
-        return $this->responseConverter->__invoke("WATER", ["0.25", "0.10"]);
+        $product = $this->getProductQueryHandler->__invoke(GetProductQuery::create($command->productName()));
+
+        return $this->responseConverter->__invoke(strtoupper($product->productName()), ["0.25", "0.10"]);
     }
 }
