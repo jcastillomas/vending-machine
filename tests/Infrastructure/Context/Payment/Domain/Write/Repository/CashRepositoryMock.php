@@ -41,4 +41,12 @@ class CashRepositoryMock
             }))
             ->shouldBeCalledOnce();
     }
+
+    public function shouldFindVendingMachine(Cash $expectedFund)
+    {
+        $this->mock
+            ->findVendingMachine()
+            ->shouldBeCalledOnce()
+            ->willReturn($expectedFund);
+    }
 }

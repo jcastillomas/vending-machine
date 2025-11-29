@@ -48,4 +48,12 @@ class CashItemTest extends TestCase
         $cashItem->resetAmount();
         $this->assertEquals(0, $cashItem->amount()->value());
     }
+
+    public function test_it_set_amount(): void
+    {
+        $expectedAmount = AmountStub::random();
+        $stockItem = CashItemStub::random();
+        $stockItem->setAmount($expectedAmount);
+        $this->assertTrue($expectedAmount->equalsTo($stockItem->amount()));
+    }
 }

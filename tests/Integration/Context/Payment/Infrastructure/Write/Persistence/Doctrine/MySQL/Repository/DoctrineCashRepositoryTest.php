@@ -21,6 +21,13 @@ final class DoctrineCashRepositoryTest extends AggregateRepositoryTestCase
         $this->thenACashIsFound($expectedCash);
     }
 
+    public function test_it_finds_cash_vending_machine(): void
+    {
+        $expectedCash = $this->givenACash();
+        $this->whenACashIsSaved($expectedCash);
+        $this->thenVendingMachineCashIsFound($expectedCash);
+    }
+
     private function givenACash(): Cash
     {
         return Cash::create(
@@ -28,6 +35,16 @@ final class DoctrineCashRepositoryTest extends AggregateRepositoryTestCase
             VendingMachineIdStub::random(),
             CashItemsStub::random()
         );
+    }
+
+    private function thenVendingMachineCashIsFound(Cash $expectedCash): void
+    {
+        $actualCash = $this->repository->findVendingMachine();
+        $this->assertEquals($expectedCash->id(), $actualCash->id());
+        $this->assertEquals($expectedCash->vendingMachineId(), $actualCash->vendingMachineId());
+        $this->assertEquals($expectedCash->cashItems()->count(), $actualCash->cashItems()->count());
+        $this->assertEquals($expectedCash->createdAt()->getTimestamp(), $actualCash->createdAt()->getTimestamp());
+        $this->assertEquals($expectedCash->updatedAt()?->getTimestamp(), $actualCash->updatedAt()?->getTimestamp());
     }
 
     private function whenACashIsSaved(Cash $cash): void

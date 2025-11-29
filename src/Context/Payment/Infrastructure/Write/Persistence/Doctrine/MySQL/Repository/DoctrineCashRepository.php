@@ -21,6 +21,11 @@ class DoctrineCashRepository extends AggregateRepository implements CashReposito
         return $this->doFind($cashId);
     }
 
+    public function findVendingMachine(): Cash
+    {
+        return $this->doSearchByCriteria([])[0];
+    }
+
     protected function entityClassName(): string
     {
         return Cash::class;

@@ -11,4 +11,5 @@ interface CashRepository
 {
     public function save(Cash $cash): void;
     public function find(CashId $cashId): Cash;
+    public function findVendingMachine(): Cash;
 }
