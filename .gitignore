@@ -60,7 +60,6 @@
 ###< phpunit/phpunit ###
 
 coverage/
-database/*
 
 
 ###> friends-of-behat/symfony-extension ###
