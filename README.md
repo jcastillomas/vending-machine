@@ -78,7 +78,6 @@ A well-design solution can be to move this logic inside a BFF, allowing the clie
 that needs to interact.
 </details>
 
-
 <details>
 <summary>2. The Goal just works for an existing machine</summary>
 In our system we designed an escalating solution to be able to have more than 1 vending machine.
@@ -87,6 +86,15 @@ The goal is the functionality of the vending-machine not the escalation solution
 just in case that we need more than 1 vending machine, but right now, we only need for the goal one simple vending machine.
 
 In this case we will create a vending machine on project starts if not exists, and then we will use this vending machine for all requests.
+</details>
+
+<details>
+<summary>3. Do not cash received coins of the bought of an item.</summary>
+The goal do not specify anything about the received money, when item has been bought we can insert this money as Cash of the change.
+
+But this logic is not described in the Goal, so, in this case we will not include to anything, and the service person in charge needs to set it
+the cash in case that is the logic using service flow. In case that the Vending Machine is able to pick up the money and put on the Cash
+Then we need to change the BuyItem logic to adapt this flow, instead of reset the found, we will add it the cash the coins used to buy the item first.
 </details>
 
 ## API documentation with all models and end-points
