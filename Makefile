@@ -64,6 +64,7 @@ install:
 	docker compose build
 	docker compose up -d
 	docker compose exec php-fpm composer install --no-interaction
+	docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=off bin/console doctrine:migrations:migrate --no-interaction"
 
 ## Starts all containers for this project
 .PHONY: start
