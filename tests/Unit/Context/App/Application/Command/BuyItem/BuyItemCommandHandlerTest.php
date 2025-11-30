@@ -10,12 +10,16 @@ use VM\App\Application\Command\BuyItem\BuyItemCommand;
 use VM\App\Application\Command\BuyItem\BuyItemCommandHandler;
 use VM\App\Application\Command\BuyItem\BuyItemCommandResponse;
 use VM\App\Application\Command\BuyItem\BuyItemCommandResponseConverter;
+use VM\Context\Payment\Application\Query\GetCash\GetCashQuery;
+use VM\Context\Payment\Application\Query\GetCash\GetCashQueryHandler;
+use VM\Context\Payment\Application\Query\GetCash\GetCashQueryResponseConverter;
 use VM\Context\Payment\Application\Query\GetCurrencies\GetCurrenciesQuery;
 use VM\Context\Payment\Application\Query\GetCurrencies\GetCurrenciesQueryHandler;
 use VM\Context\Payment\Application\Query\GetCurrencies\GetCurrenciesQueryResponseConverter;
 use VM\Context\Payment\Application\Query\GetFund\GetFundQuery;
 use VM\Context\Payment\Application\Query\GetFund\GetFundQueryHandler;
 use VM\Context\Payment\Application\Query\GetFund\GetFundQueryResponseConverter;
+use VM\Context\Payment\Domain\Write\Aggregate\Cash;
 use VM\Context\Payment\Domain\Write\Aggregate\Currency;
 use VM\Context\Payment\Domain\Write\Aggregate\Fund;
 use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
@@ -29,8 +33,10 @@ use VM\Context\Product\Application\Query\GetProduct\GetProductQueryResponseConve
 use VM\Context\Product\Domain\Write\Aggregate\Product;
 use VM\Context\Product\Domain\Write\Aggregate\ValueObject\ProductName;
 use VM\Shared\Domain\Exception\ConflictException;
+use VM\Tests\Infrastructure\Context\Payment\Application\Query\GetCashQueryHandlerMock;
 use VM\Tests\Infrastructure\Context\Payment\Application\Query\GetCurrenciesQueryHandlerMock;
 use VM\Tests\Infrastructure\Context\Payment\Application\Query\GetFundQueryHandlerMock;
+use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CashIdStub;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyIdStub;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyKindStub;
 use VM\Tests\Infrastructure\Context\Payment\Domain\Write\Aggregate\ValueObject\FundIdStub;
@@ -47,6 +53,7 @@ final class BuyItemCommandHandlerTest extends TestCase
     private GetProductQueryHandlerMock $getProductQueryHandlerMock;
     private GetCurrenciesQueryHandlerMock $getCurrenciesQueryHandlerMock;
     private GetFundQueryHandlerMock $getFundQueryHandlerMock;
+    private GetCashQueryHandlerMock $getCashQueryHandlerMock;
 
     protected function setUp(): void
     {
@@ -54,11 +61,13 @@ final class BuyItemCommandHandlerTest extends TestCase
         $this->getProductQueryHandlerMock = new GetProductQueryHandlerMock($prophet->prophesize(GetProductQueryHandler::class));
         $this->getCurrenciesQueryHandlerMock = new GetCurrenciesQueryHandlerMock($prophet->prophesize(GetCurrenciesQueryHandler::class));
         $this->getFundQueryHandlerMock = new GetFundQueryHandlerMock($prophet->prophesize(GetFundQueryHandler::class));
+        $this->getCashQueryHandlerMock = new GetCashQueryHandlerMock($prophet->prophesize(GetCashQueryHandler::class));
         $this->handler = new BuyItemCommandHandler(
             new BuyItemCommandResponseConverter(),
             $this->getProductQueryHandlerMock->reveal(),
             $this->getCurrenciesQueryHandlerMock->reveal(),
-            $this->getFundQueryHandlerMock->reveal()
+            $this->getFundQueryHandlerMock->reveal(),
+            $this->getCashQueryHandlerMock->reveal()
         );
     }
 
@@ -68,15 +77,17 @@ final class BuyItemCommandHandlerTest extends TestCase
         $getProductQuery = $this->givenAGetProductQuery($command);
         $getCurrenciesQuery = $this->givenAGetCurrenciesQuery();
         $getFundQuery = $this->givenAGetFundQuery();
+        $getCashQuery = $this->givenAGetCashQuery();
         $product = $this->givenAProduct($command);
         $currencies = $this->givenCurrencies();
         $fund = $this->givenFund($currencies);
+        $cash = $this->givenCash($currencies);
         $this->thenGetProductQueryHandlerMockMockShouldBeInvoke($getProductQuery, $product);
         $this->thenGetCurrenciesQueryHandlerMockMockShouldBeInvoke($getCurrenciesQuery, $currencies);
         $this->thenGetFundQueryHandlerMockMockShouldBeInvoke($getFundQuery, $fund);
+        $this->thenGetCashQueryHandlerMockMockShouldBeInvoke($getCashQuery, $cash);
 
         $queryResponse = $this->whenHandlingCommand($command);
-        $floatRegex = '/^[0-9\,\.]+$/i';
 
         $this->assertIsArray($queryResponse->result());
 
@@ -84,9 +95,7 @@ final class BuyItemCommandHandlerTest extends TestCase
             if ($index == 0) {
                 $this->assertIsString($value);
             } else {
-                $this->assertIsString($value);
-                $this->assertIsFloat(floatval($value));
-                $this->assertMatchesRegularExpression($floatRegex, $value);
+                $this->assertIsFloat($value);
             }
         }
     }
@@ -125,6 +134,11 @@ final class BuyItemCommandHandlerTest extends TestCase
     private function givenAGetFundQuery(): GetFundQuery
     {
         return GetFundQuery::create();
+    }
+
+    private function givenAGetCashQuery(): GetCashQuery
+    {
+        return GetCashQuery::create();
     }
 
     private function givenAProduct(BuyItemCommand $command): Product
@@ -172,6 +186,26 @@ final class BuyItemCommandHandlerTest extends TestCase
         );
     }
 
+    private function givenCash(array $currencies): Cash
+    {
+        return Cash::create(
+            CashIdStub::random(),
+            VendingMachineIdStub::random(),
+            CashItems::create([
+                CashItem::create(
+                    CashItemIdStub::random(),
+                    $currencies[0]->id(),
+                    Amount::fromInt(0)
+                ),
+                CashItem::create(
+                    CashItemIdStub::random(),
+                    $currencies[1]->id(),
+                    Amount::fromInt(10)
+                ),
+            ])
+        );
+    }
+
     private function givenEmptyFund(array $currencies): Fund
     {
         return Fund::create(
@@ -208,6 +242,12 @@ final class BuyItemCommandHandlerTest extends TestCase
     {
         $converter = new GetFundQueryResponseConverter();
         $this->getFundQueryHandlerMock->shouldInvoke($command, $converter($fund));
+    }
+
+    private function thenGetCashQueryHandlerMockMockShouldBeInvoke(GetCashQuery $command, Cash $cash): void
+    {
+        $converter = new GetCashQueryResponseConverter();
+        $this->getCashQueryHandlerMock->shouldInvoke($command, $converter($cash));
     }
 
     private function whenHandlingCommand(BuyItemCommand $query): BuyItemCommandResponse

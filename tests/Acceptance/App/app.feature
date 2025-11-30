@@ -2,7 +2,11 @@ Feature: app
     In absence of a BFF or Orchestrator to reach the goal
     we will use the current service to generate all the request to each context
 
+  @truncateDatabaseTables
   Scenario: It receives a valid request to change stock and product
+      Given I have currencies
+      Given I have fund
+      Given I have cash
     When I send a "PUT" request to "/service" with body
       """
       {
@@ -25,8 +29,11 @@ Feature: app
       """
       []
       """
-
+  @truncateDatabaseTables
   Scenario: It receives a valid request to change multiple stock and product
+    Given I have currencies
+    Given I have fund
+    Given I have cash
     When I send a "PUT" request to "/service" with body
       """
       {
@@ -58,7 +65,11 @@ Feature: app
       []
       """
 
+  @truncateDatabaseTables
   Scenario: It receives a valid request to buy an item
+    Given I have currencies
+    Given I have fund
+    Given I have cash
     When I send a "GET" request to "/get-item" with body
       """
       "Water"
@@ -68,7 +79,9 @@ Feature: app
       """
       [
         "WATER",
-        "0.25",
-        "0.10"
+        1,
+        1,
+        0.1,
+        0.05
       ]
       """

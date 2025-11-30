@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VM\Tests\Infrastructure\Acceptance\Behat\Context;
 
+use VM\Tests\DataFixtures\DataLoaders\CashFixtures;
 use VM\Tests\DataFixtures\DataLoaders\CurrenciesFixtures;
 use VM\Tests\DataFixtures\DataLoaders\FundFixtures;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -35,10 +36,18 @@ final class PaymentContext extends AggregateContext
         $this->loadFixtures(new FundFixtures());
     }
 
+    /**
+     * @Given /^I have cash/
+     */
+    public function iHaveCash(): void
+    {
+        $this->loadFixtures(new CashFixtures());
+    }
+
     protected function purge(): void
     {
         $this->purgeTables(
-            'currency', 'fund', 'cash_item', 'fund_cash_item'
+            'currency', 'fund', 'cash', 'cash_item', 'fund_cash_item', 'cash_cash_item'
         );
     }
 }

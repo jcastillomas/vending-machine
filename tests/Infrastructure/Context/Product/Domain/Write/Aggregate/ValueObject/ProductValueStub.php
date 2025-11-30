@@ -20,6 +20,6 @@ final class ProductValueStub
     {
         $faker = Factory::create();
 
-        return ProductValue::fromFloat($faker->randomFloat(null, self::MIN_VALUE));
+        return ProductValue::fromFloat($faker->randomFloat(3, self::MIN_VALUE));
     }
 }

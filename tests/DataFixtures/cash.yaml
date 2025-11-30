@@ -1,0 +1,16 @@
+cash:
+  - id: "471d288c-dbe7-4f2f-bfd8-91d9040caed4"
+    vending_machine_id: "9f027cde-0868-4854-a9e5-857866e9302c"
+    cash_items:
+      - currency_id: "995e9deb-da13-48e0-abaa-0198b9f923e1"
+        amount: 10
+        id: "b153b6ed-ca3d-41bc-a229-3b0be3cca344"
+      - currency_id: "e62ae603-0131-4406-acef-b9a825eb1755"
+        amount: 10
+        id: "79843867-9f60-40aa-8744-0482998dd42c"
+      - currency_id: "7c85277c-12d7-4f34-a03b-533e7f4b6c03"
+        amount: 10
+        id: "bb3da37b-f92a-48d4-af36-4a4b2ac3b0ce"
+      - currency_id: "f11d5711-6d26-4082-aac2-ed873ebe8282"
+        amount: 10
+        id: "6bfe1801-317d-429c-86ad-08d012e73671"
