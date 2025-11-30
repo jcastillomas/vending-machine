@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace VM\App\Application\Command\BuyItem;
 
+use VM\Context\Payment\Application\Command\ResetFund\ResetFundCommand;
+use VM\Context\Payment\Application\Command\ResetFund\ResetFundCommandHandler;
+use VM\Context\Payment\Application\Command\UpdateCash\UpdateCashCommand;
+use VM\Context\Payment\Application\Command\UpdateCash\UpdateCashCommandHandler;
 use VM\Context\Payment\Application\Query\GetCash\GetCashQuery;
 use VM\Context\Payment\Application\Query\GetCash\GetCashQueryHandler;
 use VM\Context\Payment\Application\Query\GetCash\GetCashQueryResponse;
@@ -13,8 +17,14 @@ use VM\Context\Payment\Application\Query\GetCurrencies\GetCurrenciesQueryRespons
 use VM\Context\Payment\Application\Query\GetFund\GetFundQuery;
 use VM\Context\Payment\Application\Query\GetFund\GetFundQueryHandler;
 use VM\Context\Payment\Application\Query\GetFund\GetFundQueryResponse;
+use VM\Context\Product\Application\Command\UpdateStock\UpdateStockCommand;
+use VM\Context\Product\Application\Command\UpdateStock\UpdateStockCommandHandler;
 use VM\Context\Product\Application\Query\GetProduct\GetProductQuery;
 use VM\Context\Product\Application\Query\GetProduct\GetProductQueryHandler;
+use VM\Context\Product\Application\Query\GetProduct\GetProductQueryResponse;
+use VM\Context\Product\Application\Query\GetStock\GetStockQuery;
+use VM\Context\Product\Application\Query\GetStock\GetStockQueryHandler;
+use VM\Context\Product\Application\Query\GetStock\GetStockQueryResponse;
 use VM\Shared\Application\Bus\Command\CommandHandlerInterface;
 use VM\Shared\Domain\Exception\ConflictException;
 
@@ -26,27 +36,24 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
         private GetCurrenciesQueryHandler       $getCurrenciesQueryHandler,
         private GetFundQueryHandler             $getFundQueryHandler,
         private GetCashQueryHandler             $getCashQueryHandler,
+        private GetStockQueryHandler            $getStockQueryHandler,
+        private UpdateStockCommandHandler       $updateStockCommandHandler,
+        private UpdateCashCommandHandler        $updateCashCommandHandler,
+        private ResetFundCommandHandler         $resetFundCommandHandler,
     )
     {
     }
 
-    /*
-        TODO: @Buy item use case:
-            8. Find Stock
-            9. Update Stock
-           10. Update Cash
-           11. Reset Fund
-     */
     /**
      * Execution process:
      *  1. Find Product by name
      *  2. Find Currencies
      *  3. Find Fund
-     *  4. Check fund amount and product value
-     *  5. Calculate change
-     *  6. Find Cash
-     *  7. Calculate change in Cash
-     *  8. Find Stock
+     *  4. Find Stock
+     *  5. Check fund and stock amount and product value
+     *  6. Calculate change
+     *  7. Find Cash
+     *  8. Calculate change in Cash
      *  9. Update Stock
      * 10. Update Cash
      * 11. Reset Fund
@@ -56,35 +63,28 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
      */
     public function __invoke(BuyItemCommand $command): BuyItemCommandResponse
     {
-        $change = [];
         $product = $this->getProductQueryHandler->__invoke(GetProductQuery::create($command->productName()));
         $currencies = $this->getCurrenciesQueryHandler->__invoke(GetCurrenciesQuery::create());
         $fund = $this->getFundQueryHandler->__invoke(GetFundQuery::create());
+        $stock = $this->getStockQueryHandler->__invoke(GetStockQuery::create());
 
+        $this->wardStock($stock, $product);
         $totalFund = $this->calculateTotalAmountOfFund($currencies->result(), $fund);
-
-        if ($totalFund < $product->productValue()) {
-            throw new ConflictException(sprintf(
-                'Insufficient fund. Missing %f to reach the product value.',
-                $product->productValue() - $totalFund
-            ));
-        }
-
-        $totalChange = $totalFund - $product->productValue();
+        $this->wardFund($product, $totalFund);
+        $totalChange = round($totalFund - $product->productValue(), 2);
 
         if ($totalChange > 0.0) {
             $cash = $this->getCashQueryHandler->__invoke(GetCashQuery::create());
             $returnCashAmount = $this->calculateChangeDependingOnCash($totalChange, $cash, $currencies->result());
         }
 
-        foreach ($returnCashAmount as $cashItem) {
-            if ($cashItem['amount'] == 0) {
-                continue;
-            }
-            foreach (range(1, $cashItem['amount']) as $count) {
-                $change[] = $cashItem['value'];
-            }
-        }
+        $this->updateStock($product, $stock);
+        $this->updateCash($returnCashAmount, $cash);
+
+        $this->resetFundCommandHandler->__invoke(ResetFundCommand::create());
+
+        $change = $this->calculateChangeResponse($returnCashAmount ?? []);
+
         return $this->responseConverter->__invoke(strtoupper($product->productName()), $change);
     }
 
@@ -141,5 +141,78 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
             return 1 + $this->calculateReturnCurrencyCashAmount($totalChange, $cashItemAmount, $currencyValue);
         }
         return 0;
+    }
+
+    private function wardStock(GetStockQueryResponse $stock, GetProductQueryResponse $product): void
+    {
+        $insufficientStock = true;
+        foreach ($stock->stockItems() as $stockItem) {
+            if ($stockItem[GetStockQueryResponse::PRODUCT_ID] == $product->id() && $stockItem[GetStockQueryResponse::AMOUNT] > 0) {
+                $insufficientStock = false;
+            }
+        }
+        if ($insufficientStock) {
+            throw new ConflictException(sprintf(
+                'Insufficient stock. %s stock is empty.',
+                $product->productName()
+            ));
+        }
+    }
+
+    private function calculateChangeResponse(array $returnCashAmount): array
+    {
+        $change = [];
+        foreach ($returnCashAmount as $cashItem) {
+            if ($cashItem['amount'] == 0) {
+                continue;
+            }
+            foreach (range(1, $cashItem['amount']) as $count) {
+                $change[] = $cashItem['value'];
+            }
+        }
+        return $change;
+    }
+
+    private function wardFund(GetProductQueryResponse $product, float $totalFund): void
+    {
+        if ($totalFund < $product->productValue()) {
+            throw new ConflictException(sprintf(
+                'Insufficient fund. Missing %f to reach the product value.',
+                $product->productValue() - $totalFund
+            ));
+        }
+    }
+
+    private function updateStock(GetProductQueryResponse $product, GetStockQueryResponse $stock): void
+    {
+        foreach ($stock->stockItems() as $stockItem) {
+            if ($stockItem[GetStockQueryResponse::PRODUCT_ID] == $product->id()) {
+                $amount = $stockItem[GetStockQueryResponse::AMOUNT] - 1;
+            }
+        }
+
+        $this->updateStockCommandHandler->__invoke(UpdateStockCommand::create([
+            [
+                UpdateStockCommand::STOCK_NAME => $product->productName(),
+                UpdateStockCommand::STOCK_AMOUNT => $amount
+            ]
+        ]));
+    }
+
+    private function updateCash(array $returnCashAmount, GetCashQueryResponse $cash): void
+    {
+        $updateCash = [];
+        foreach ($returnCashAmount as $returnCashItemAmount) {
+            foreach ($cash->cashItems() as $cashItem) {
+                if ($cashItem[GetCashQueryResponse::CURRENCY_ID] == $returnCashItemAmount['currencyId']) {
+                    $updateCash[] = [
+                        UpdateCashCommand::CASH_VALUE => $returnCashItemAmount['value'],
+                        UpdateCashCommand::CASH_AMOUNT =>$cashItem[GetCashQueryResponse::AMOUNT] - $returnCashItemAmount['amount']
+                    ];
+                }
+            }
+        }
+
+        $this->updateCashCommandHandler->__invoke(UpdateCashCommand::create($updateCash));
     }
 }

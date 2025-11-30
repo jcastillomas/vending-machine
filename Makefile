@@ -53,6 +53,7 @@ help:
 	@echo -e "    $(COLOR_YELLOW)test-unit     	       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute PHPUnit tests with coverage mode$(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-integration      	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute integration tests $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-acceptance       	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute Behat tests $(COLOR_NC)"
+	@echo -e "    $(COLOR_YELLOW)test-this-acceptance  	$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute Behat tests with "this" filter $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)test-all			$(COLOR_PURPLE)-> $(COLOR_CYAN) Execute all tests $(COLOR_NC)"
 	@echo -e "    $(COLOR_YELLOW)fix-me			$(COLOR_PURPLE)-> $(COLOR_CYAN) Restore database to reload data of the VM$(COLOR_NC)"
 	@echo ""
@@ -104,6 +105,12 @@ test-all: test-unit test-integration test-acceptance
 test-acceptance: __run-test-acceptance fix-me
 __run-test-acceptance:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat -c tests/Acceptance/behat.yml --colors ${parameters}"
+
+## Runs acceptance behat tests tagged with this
+.PHONY: test-this-acceptance
+test-this-acceptance:  __run-test-this-acceptance fix-me
+__run-test-this-acceptance:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/behat -c tests/Acceptance/behat.yml --tags '@this' --colors ${parameters}"
 
 ## Restore DB, this command will help us to restore the DB data after tests, in order to set-up again the VM
 .PHONY: fix-me
