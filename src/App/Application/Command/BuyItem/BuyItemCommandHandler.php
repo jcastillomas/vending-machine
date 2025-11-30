@@ -76,19 +76,17 @@ final readonly class BuyItemCommandHandler implements CommandHandlerInterface
         if ($totalChange > 0.0) {
             $cash = $this->getCashQueryHandler->__invoke(GetCashQuery::create());
             $returnCashAmount = $this->calculateChangeDependingOnCash($totalChange, $cash, $currencies->result());
+            $this->updateCash($returnCashAmount, $cash);
         }
 
         $this->updateStock($product, $stock);
-        $this->updateCash($returnCashAmount, $cash);
-
         $this->resetFundCommandHandler->__invoke(ResetFundCommand::create());
-
         $change = $this->calculateChangeResponse($returnCashAmount ?? []);
 
         return $this->responseConverter->__invoke(strtoupper($product->productName()), $change);
     }
 
-    private function calculateTotalAmountOfFund(array $currencies, GetFundQueryResponse $fund)
+    private function calculateTotalAmountOfFund(array $currencies, GetFundQueryResponse $fund): float
     {
         $totalFund = 0.0;
         foreach ($fund->cashItems() as $fundItem) {
