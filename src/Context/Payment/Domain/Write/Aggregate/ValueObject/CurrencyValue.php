@@ -19,6 +19,6 @@ final class CurrencyValue extends FloatValueObject
 
     private function guardValidName(float $value): void
     {
-        Assert::greaterThan($value,self::MINIMUM, 'Not a valid currency value');
+        Assert::True($value > self::MINIMUM, 'Not a valid currency value');
     }
 }

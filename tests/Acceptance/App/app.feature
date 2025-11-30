@@ -65,7 +65,7 @@ Feature: app
       []
       """
 
-  @truncateDatabaseTables @this
+  @truncateDatabaseTables
   Scenario: It receives a valid request to buy an item
     Given I have currencies
     Given I have fund

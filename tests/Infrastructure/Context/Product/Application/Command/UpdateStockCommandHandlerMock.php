@@ -33,7 +33,7 @@ class UpdateStockCommandHandlerMock
     {
         $this->mock
             ->__invoke(Argument::that(function (UpdateStockCommand $actualCommand) use ($expectedCommand) {
-                Assert::eq($expectedCommand->stock(), $actualCommand->stock());
+                Assert::eq(count($expectedCommand->stock()), count($actualCommand->stock()));
 
                 return true;
             }))

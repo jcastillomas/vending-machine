@@ -141,6 +141,7 @@ final class BuyItemCommandHandlerTest extends TestCase
 
     public function test_it_should_throw_conflict_exception_on_insufficient_fund(): void
     {
+        $this->expectException(ConflictException::class);
         $command = $this->givenACommand();
         $getProductQuery = $this->givenAGetProductQuery($command);
         $getCurrenciesQuery = $this->givenAGetCurrenciesQuery();
