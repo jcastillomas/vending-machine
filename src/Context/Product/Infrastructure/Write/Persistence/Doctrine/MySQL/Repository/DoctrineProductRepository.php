@@ -8,6 +8,7 @@ use VM\Context\Product\Domain\Write\Aggregate\ValueObject\ProductId;
 use VM\Context\Product\Domain\Write\Aggregate\Product;
 use VM\Context\Product\Domain\Write\Aggregate\ValueObject\ProductName;
 use VM\Context\Product\Domain\Write\Repository\ProductRepository;
+use VM\Shared\Domain\Write\Exception\EntityNotFoundException;
 use VM\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
 
 class DoctrineProductRepository extends AggregateRepository implements ProductRepository
@@ -24,7 +25,8 @@ class DoctrineProductRepository extends AggregateRepository implements ProductRe
 
     public function findByName(ProductName $productName): Product
     {
-        return $this->doSearchByCriteria(['name' => $productName])[0];
+        return $this->doSearchByCriteria(['name' => $productName])[0] ??
+            throw new EntityNotFoundException(sprintf('Product with %s with value %s was not found', get_class($productName), $productName->value()));
     }
 
     protected function entityClassName(): string

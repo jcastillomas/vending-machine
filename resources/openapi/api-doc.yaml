@@ -114,18 +114,17 @@ paths:
     ######################################
     ####              APP             ####
     ######################################
-    /buy-item:
-        get:
+    /get-item:
+        post:
             tags:
                 - App
-            summary: Buy a Product.
-            parameters:
-                -   name: product_name
-                    in: query
-                    required: true
-                    description: Product name.
-                    schema:
-                        $ref: '#/components/schemas/ProductName'
+            summary: Buy an item (Product).
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                            $ref: '#/components/schemas/ProductName'
             responses:
                 '200':
                     description: Transaction complete.

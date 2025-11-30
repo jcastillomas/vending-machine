@@ -70,7 +70,7 @@ Feature: app
     Given I have currencies
     Given I have fund
     Given I have cash
-    When I send a "GET" request to "/get-item" with body
+    When I send a "POST" request to "/get-item" with body
       """
       "Water"
       """

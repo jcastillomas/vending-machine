@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace VM\App\Application\Command\BuyItem;
 
-use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
-use VM\Context\Payment\Domain\Write\Entity\ValueObject\Amount;
 use VM\Shared\Application\Bus\Command\Command;
 
 final class BuyItemCommand extends Command

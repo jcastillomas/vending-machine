@@ -5,4 +5,4 @@ service:
 get-item:
     path: /get-item
     controller: VM\App\UI\Controller\Service\BuyItemController
-    methods:  [GET]
+    methods:  [POST]

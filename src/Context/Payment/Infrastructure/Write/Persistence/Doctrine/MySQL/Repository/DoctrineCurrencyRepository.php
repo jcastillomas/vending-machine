@@ -8,6 +8,7 @@ use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyId;
 use VM\Context\Payment\Domain\Write\Aggregate\Currency;
 use VM\Context\Payment\Domain\Write\Aggregate\ValueObject\CurrencyValue;
 use VM\Context\Payment\Domain\Write\Repository\CurrencyRepository;
+use VM\Shared\Domain\Write\Exception\EntityNotFoundException;
 use VM\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
 
 class DoctrineCurrencyRepository extends AggregateRepository implements CurrencyRepository
@@ -24,7 +25,8 @@ class DoctrineCurrencyRepository extends AggregateRepository implements Currency
 
     public function findByValue(CurrencyValue $currencyValue): Currency
     {
-        return $this->doSearchByCriteria(['value' => $currencyValue])[0];
+        return $this->doSearchByCriteria(['value' => $currencyValue])[0]  ??
+            throw new EntityNotFoundException(sprintf('Currency with %s with value %s was not found', get_class($currencyValue), $currencyValue->value()));
     }
 
     public function findCurrencies(): array
