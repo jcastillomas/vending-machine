@@ -88,13 +88,13 @@ cc:
 ## Runs unit tests with coverage mode
 .PHONY: test-unit
 test-unit:
-	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=coverage vendor/bin/phpunit -c tests/Unit/phpunit.xml ${parameters}"
 
 ## Runs unit integration tests
 .PHONY: test-integration
 test-integration: __run-test-integration fix-me
 __run-test-integration:
-	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' vendor/bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"
 
 ## Runs all tests starting with unit then integration
 .PHONY: test-all
