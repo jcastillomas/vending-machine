@@ -99,4 +99,4 @@ Then we need to change the BuyItem logic to adapt this flow, instead of reset th
 
 ## API documentation with all models and end-points
 
-You can find an openapi doc [here](../openapi/api-doc.yaml).
+You can find an openapi doc [here](resources/openapi/api-doc.yaml)
